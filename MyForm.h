@@ -3,8 +3,25 @@
 #include <iostream>
 #include <string>
 #include <curl/curl.h>
+#include <nlohmann/json.hpp>
+#include <windows.h> 
 
-std::string TEMPERATURE_PARSER = "0";						// обновляющаяся переменная темпы в Перми
+std::string TEMPERATURE_PARSER = "0";											// обновляющаяся переменная темпы в Перми
+std::string tempGor			   = "0";											// температура холодной горячей воды
+std::string tempXol			   = "0";											// температура холодной горячей воды
+std::string tempKomn		   = "0";											// температура в комнате
+std::string PNagr			   = "0";											// мощность нагрева
+std::string pomp			   = "0";											// идет ли подача воды
+std::string error			   = "0";											// ошибка в ардуинке
+
+std::string WEATHER_URL = "https:\//www.gismeteo.ru/weather-perm-4476/now/";	// откуда парсить темпу погоды
+std::string SERVER_URL  = "http:\//x958887o.beget.tech/";						// ссылка для работы с ардуинкой
+std::string jsPostPC	= "getPC.php";											// post запрос
+std::string jsGet		= "new.json";											// json, откуда берутся данные выше.
+std::string jsGetPC		= "newPC.json";
+
+int countL = 0;
+using namespace nlohmann;	// для json
 
 //=========Парсер=======//
 namespace Parser
@@ -13,20 +30,70 @@ namespace Parser
 		data->append((char*)ptr, size * nmemb);
 		return size * nmemb;
 	}
-	std::string get_data_from_site() {
+	std::string get_data_from_site(std::string url) {
 		CURL* curl;
-		std::string data;
+		CURLcode response;
+		std::string data = "";
 
 		curl = curl_easy_init();
-		curl_easy_setopt(curl, CURLOPT_URL, "https://www.gismeteo.ru/weather-perm-4476/now/");
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
-		curl_easy_perform(curl);
-		curl_easy_cleanup(curl);
-
+		if (curl)
+		{
+			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
+			response = curl_easy_perform(curl);
+			if (response != CURLE_OK) {
+				std::cerr << "Error: " << curl_easy_strerror(response) << std::endl;
+				return "";
+			}
+			curl_easy_cleanup(curl);
+			if (url == WEATHER_URL)
+			{
+				std::cout << "GET: " << "Parsing temperature = " << TEMPERATURE_PARSER << std::endl;
+			}
+			else 	std::cout << "GET: " << data << std::endl;
+		}
 		return data;
 	}
+
+	int post_data_to_site(std::string url, json data)
+	{
+		CURLcode ret;
+		CURL* hnd;
+		struct curl_slist* slist1;
+		std::string jsonstr = data.dump();
+
+		slist1 = NULL;
+		slist1 = curl_slist_append(slist1, "Content-Type: application/json");
+
+		hnd = curl_easy_init();
+		if (hnd)
+		{
+			curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
+			curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
+			curl_easy_setopt(hnd, CURLOPT_POSTFIELDS, jsonstr.c_str());
+			curl_easy_setopt(hnd, CURLOPT_USERAGENT, "Mozilla/5.0");
+			curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
+			curl_easy_setopt(hnd, CURLOPT_POSTFIELDSIZE, jsonstr.size());
+			curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
+			curl_easy_setopt(hnd, CURLOPT_CUSTOMREQUEST, "POST");
+			curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
+
+			ret = curl_easy_perform(hnd);
+			if (ret != CURLE_OK) {
+				std::cerr << "Error: " << curl_easy_strerror(ret) << std::endl;
+				return 0;
+			}
+			std::cout << "POST: " << jsonstr << std::endl;
+			curl_easy_cleanup(hnd);
+			curl_slist_free_all(slist1);
+			return 1;
+		} return 0;
+	}
+
+
 	std::string parse_temperature(std::string data) {
+		if (data == "") return "0";
 		int pos = data.find("<span class=\"sign\">"); 
 		if ('-' == data[pos + 19])
 		{
@@ -42,9 +109,10 @@ namespace Parser
 	}
 	void Parsing()
 	{
-		std::string data = get_data_from_site();
+		std::string data = get_data_from_site(WEATHER_URL);
 		TEMPERATURE_PARSER = parse_temperature(data);
 	}
+
 }
 
 
@@ -89,9 +157,16 @@ namespace WinProject {
 		}
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::TextBox^ TextYopta;
+	private: System::Windows::Forms::Button^ close;
 
-	private: System::Windows::Forms::Button^ button2;
+
 	private: System::Windows::Forms::Timer^ timer1;
+	private: System::Windows::Forms::Button^ button2;
+
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::PictureBox^ Settings;
+
+
 	private: System::ComponentModel::IContainer^ components;
 
 	protected:
@@ -113,53 +188,88 @@ namespace WinProject {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->TextYopta = (gcnew System::Windows::Forms::TextBox());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->close = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->Settings = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Settings))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(100, 245);
+			this->button1->Location = System::Drawing::Point(86, 163);
 			this->button1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(165, 92);
 			this->button1->TabIndex = 0;
-			this->button1->Text = L"btn";
+			this->button1->Text = L"Отправить json";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MyForm::btn);
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::btnNumber_Click);
 			// 
 			// TextYopta
 			// 
-			this->TextYopta->Location = System::Drawing::Point(136, 175);
+			this->TextYopta->Location = System::Drawing::Point(115, 83);
 			this->TextYopta->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->TextYopta->Name = L"TextYopta";
-			this->TextYopta->Size = System::Drawing::Size(100, 20);
+			this->TextYopta->Size = System::Drawing::Size(150, 20);
 			this->TextYopta->TabIndex = 1;
 			this->TextYopta->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox);
 			// 
-			// button2
+			// close
 			// 
-			this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(230)), static_cast<System::Int32>(static_cast<System::Byte>(7)),
+			this->close->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(230)), static_cast<System::Int32>(static_cast<System::Byte>(7)),
 				static_cast<System::Int32>(static_cast<System::Byte>(7)));
-			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
-			this->button2->Cursor = System::Windows::Forms::Cursors::Arrow;
-			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Font = (gcnew System::Drawing::Font(L"Marlett", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->close->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
+			this->close->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->close->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->close->Font = (gcnew System::Drawing::Font(L"Marlett", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button2->ForeColor = System::Drawing::Color::White;
-			this->button2->Location = System::Drawing::Point(12, 13);
-			this->button2->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(29, 28);
-			this->button2->TabIndex = 2;
-			this->button2->Text = L"x";
-			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			this->close->ForeColor = System::Drawing::Color::White;
+			this->close->Location = System::Drawing::Point(12, 13);
+			this->close->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->close->Name = L"close";
+			this->close->Size = System::Drawing::Size(29, 28);
+			this->close->TabIndex = 2;
+			this->close->Text = L"x";
+			this->close->UseVisualStyleBackColor = false;
+			this->close->Click += gcnew System::EventHandler(this, &MyForm::btn_Close);
 			// 
 			// timer1
 			// 
 			this->timer1->Interval = 10000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
+			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(86, 278);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(174, 101);
+			this->button2->TabIndex = 3;
+			this->button2->Text = L"Принять json";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::btnNumber_Click);
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(61, 61);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(48, 42);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->pictureBox1->TabIndex = 4;
+			this->pictureBox1->TabStop = false;
+			// 
+			// Settings
+			// 
+			this->Settings->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Settings.Image")));
+			this->Settings->Location = System::Drawing::Point(47, 12);
+			this->Settings->Name = L"Settings";
+			this->Settings->Size = System::Drawing::Size(35, 29);
+			this->Settings->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->Settings->TabIndex = 5;
+			this->Settings->TabStop = false;
 			// 
 			// MyForm
 			// 
@@ -167,9 +277,12 @@ namespace WinProject {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(99)),
 				static_cast<System::Int32>(static_cast<System::Byte>(99)));
-			this->ClientSize = System::Drawing::Size(371, 493);
+			this->ClientSize = System::Drawing::Size(370, 523);
+			this->Controls->Add(this->Settings);
 			this->Controls->Add(this->button2);
+			this->Controls->Add(this->close);
 			this->Controls->Add(this->TextYopta);
+			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->button1);
 			this->ForeColor = System::Drawing::Color::Black;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
@@ -178,29 +291,61 @@ namespace WinProject {
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"WinProject";
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Settings))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
-	}
+	//private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {}
 	
-	private: System::Void btn(System::Object^ sender, System::EventArgs^ e) 
+	private: System::Void btnNumber_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
-		this->TextYopta->Text = "Тут должна быть темпа";
+		Button^ button = safe_cast<Button^>(sender);
+		if (button->Text == "Отправить json")
+		{
+			
+			
+			json data = { {"led", (countL++) % 2}};
+
+			if (Parser::post_data_to_site(SERVER_URL + jsPostPC, data))
+			{
+				this->TextYopta->Text = gcnew String("Успешно отправилось");
+			}
+		}
+		else if (button->Text == "Принять json")
+		{
+			char result = 'n';
+			json datajs;
+			std::string data;
+			int count = 0;
+			while (true)
+			{
+				data = Parser::get_data_from_site(SERVER_URL+jsGet);
+				datajs = json::parse(data);
+				result = data[11];
+				if (result == 'n')
+				{
+					Sleep(500);
+					count++;
+					if (count == 10) { return; }
+				}
+				else break;
+			}
+			this->TextYopta->Text = gcnew String("Успешно считалось");
+		}
 	}
 	private: System::Void textBox(System::Object^ sender, System::EventArgs^ e) {
 	}
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) 
+	private: System::Void btn_Close(System::Object^ sender, System::EventArgs^ e) 
 	{
 		this->Close();
 	}
-private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
-{
-	Parser::Parsing();
-	this->TextYopta->Text = gcnew String(TEMPERATURE_PARSER.c_str());
-}
-};
+	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
+	{
+		Parser::Parsing();
+		this->TextYopta->Text = gcnew String(TEMPERATURE_PARSER.c_str());
+	}
+	};
 }
