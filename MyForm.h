@@ -1,5 +1,6 @@
 #pragma once
 #define CURL_STATICLIB
+
 #include <iostream>
 #include <string>
 #include <curl/curl.h>
@@ -20,7 +21,6 @@ std::string jsPostPC	= "getPC.php";											// post запрос
 std::string jsGet		= "new.json";											// json, откуда берутся данные выше.
 std::string jsGetPC		= "newPC.json";
 
-int countL = 0;
 using namespace nlohmann;	// для json
 
 //=========Парсер=======//
@@ -277,7 +277,7 @@ namespace WinProject {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(99)),
 				static_cast<System::Int32>(static_cast<System::Byte>(99)));
-			this->ClientSize = System::Drawing::Size(370, 523);
+			this->ClientSize = System::Drawing::Size(380, 523);
 			this->Controls->Add(this->Settings);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->close);
@@ -291,6 +291,8 @@ namespace WinProject {
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"WinProject";
+			this->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseDown);
+			this->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseMove);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Settings))->EndInit();
 			this->ResumeLayout(false);
@@ -307,7 +309,7 @@ namespace WinProject {
 		{
 			
 			
-			json data = { {"led", (countL++) % 2}};
+			json data = { {"led", ( rand() % 2 ) }};
 
 			if (Parser::post_data_to_site(SERVER_URL + jsPostPC, data))
 			{
@@ -347,5 +349,22 @@ namespace WinProject {
 		Parser::Parsing();
 		this->TextYopta->Text = gcnew String(TEMPERATURE_PARSER.c_str());
 	}
-	};
+	private: System::Drawing::Point lastPoint;
+
+	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
+	{
+		if (e->Button == System::Windows::Forms::MouseButtons::Left)
+		{
+			lastPoint = e->Location;
+		}
+	}
+	private: System::Void MyForm_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
+	{
+		if (e->Button == System::Windows::Forms::MouseButtons::Left)
+		{
+			this->Left += e->X - lastPoint.X;
+			this->Top += e->Y - lastPoint.Y;
+		}
+	}
+};
 }
