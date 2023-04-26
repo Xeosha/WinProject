@@ -3,11 +3,7 @@
 #include <iostream>
 #include "MyForm.h"
 #include <msclr/marshal.h>
-#include <mysql_connection.h>
-#include <cppconn/driver.h>
-#include <cppconn/statement.h>
-#include <cppconn/prepared_statement.h>
-
+#include "MySqlCon.h"
 
 
 namespace WinProject {
@@ -28,9 +24,6 @@ namespace WinProject {
 		Autorisation(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: добавьте код конструктора
-			//
 			this->TextLogin->Text = "ВВЕДИТЕ ЛОГИН";
 			TextLogin->ForeColor = Color::WhiteSmoke;
 			this->TextPassword->Text = "ВВЕДИТЕ ПАРОЛЬ";
@@ -41,8 +34,13 @@ namespace WinProject {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			// запретить расширение кнопок
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
-
-			
+		}
+		std::string String_to_string(String^ str)
+		{
+			IntPtr ptr = Marshal::StringToHGlobalAnsi(str);
+			std::string res_str = static_cast<char*>(ptr.ToPointer());
+			Marshal::FreeHGlobal(ptr);
+			return res_str;
 		}
 
 	protected:
@@ -140,7 +138,6 @@ namespace WinProject {
 			// 
 			this->button2->BackColor = System::Drawing::Color::WhiteSmoke;
 			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
-			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->button2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
@@ -233,34 +230,17 @@ private: System::Void btnNumberClick(System::Object^ sender, System::EventArgs^ 
 	
 	if (button->Text == "АВТОРИЗОВАТЬСЯ")
 	{
-		// Подключение к базе данных
 		try {
 			// Преобразование в string из String^
-			IntPtr ptr = Marshal::StringToHGlobalAnsi(TextLogin->Text);
-			std::string login = static_cast<char*>(ptr.ToPointer());
-			Marshal::FreeHGlobal(ptr);
-			IntPtr ptr2 = Marshal::StringToHGlobalAnsi(TextPassword->Text);
-			std::string password = static_cast<char*>(ptr2.ToPointer());
-			Marshal::FreeHGlobal(ptr2);
+			std::string login = String_to_string(TextLogin->Text);
+			std::string password = String_to_string(TextPassword->Text);
+			
+			// подключение к БД
+			MySqlCon DB;
+			DB.connection_to_database();
 
-			sql::Driver* driver;
-			sql::Connection* con;
-			sql::PreparedStatement* stmt;
-			sql::ResultSet* res;
-
-			// Create a connection to the MySQL database
-			driver = get_driver_instance();
-			con = driver->connect("x958887o.beget.tech:3306", "x958887o_login", "bGYD7d2h");
-			con->setSchema("x958887o_login");
-
-			// Select the user with the given username and password
-			stmt = con->prepareStatement("SELECT * FROM passwords WHERE login=? AND password=?");
-			stmt->setString(1, login);
-			stmt->setString(2, password);
-			res = stmt->executeQuery();
-
-			// Check if the user was found
-			if (res->next()) {
+			// проверка на логин-пароль
+			if (DB.check_user_data(login, password)) {
 				std::cout << "Login successful!" << std::endl;
 				MyForm^ main_form = gcnew MyForm();
 				main_form->Show();
@@ -270,15 +250,17 @@ private: System::Void btnNumberClick(System::Object^ sender, System::EventArgs^ 
 				std::cout << "Invalid username or password." << std::endl;
 				MessageBox::Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
-
-			delete res;
-			delete stmt;
-			delete con;
 		}
 		catch (sql::SQLException& e) {
 			std::cout << "SQL error: " << e.what() << std::endl;
-		}
+		} 
 	}
+	else if (button->Text == "СОЗДАТЬ АККАУНТ" ||
+			 button->Text == "ЗАБЫЛИ ПАРОЛЬ")
+	{
+		std::cout << "Нажаты кнопки, которые не используются." << std::endl;
+		MessageBox::Show("Функционал в данной версии не реализован", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	} else MessageBox::Show("Неизвестная кнопка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 }
 private: System::Void BtnClose(System::Object^ sender, System::EventArgs^ e) 
 {

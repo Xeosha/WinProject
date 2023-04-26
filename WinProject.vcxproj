@@ -135,6 +135,7 @@
     <ClCompile Include="Autorisation.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MySqlCon.cpp" />
+    <ClCompile Include="ParseSite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Autorisation.h">
@@ -144,6 +145,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MySqlCon.h" />
+    <ClInclude Include="ParseSite.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Autorisation.resx">

@@ -1,120 +1,16 @@
 #pragma once
-#define CURL_STATICLIB
-
-#include <iostream>
 #include <string>
-#include <curl/curl.h>
-#include <nlohmann/json.hpp>
-#include <windows.h> 
+#include "ParseSite.h"
 
-std::string TEMPERATURE_PARSER = "0";											// обновл€юща€с€ переменна€ темпы в ѕерми
+
 std::string tempGor			   = "0";											// температура холодной гор€чей воды
 std::string tempXol			   = "0";											// температура холодной гор€чей воды
 std::string tempKomn		   = "0";											// температура в комнате
 std::string PNagr			   = "0";											// мощность нагрева
 std::string pomp			   = "0";											// идет ли подача воды
-std::string error			   = "0";											// ошибка в ардуинке
 
-std::string WEATHER_URL = "https:\//www.gismeteo.ru/weather-perm-4476/now/";	// откуда парсить темпу погоды
-std::string SERVER_URL  = "http:\//x958887o.beget.tech/";						// ссылка дл€ работы с ардуинкой
-std::string jsPostPC	= "getPC.php";											// post запрос
-std::string jsGet		= "new.json";											// json, откуда берутс€ данные выше.
-std::string jsGetPC		= "newPC.json";
 
 using namespace nlohmann;	// дл€ json
-
-//=========ѕарсер=======//
-namespace Parser
-{
-	size_t write_data(void* ptr, size_t size, size_t nmemb, std::string* data) {
-		data->append((char*)ptr, size * nmemb);
-		return size * nmemb;
-	}
-	std::string get_data_from_site(std::string url) {
-		CURL* curl;
-		CURLcode response;
-		std::string data = "";
-
-		curl = curl_easy_init();
-		if (curl)
-		{
-			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
-			response = curl_easy_perform(curl);
-			if (response != CURLE_OK) {
-				std::cerr << "Error: " << curl_easy_strerror(response) << std::endl;
-				return "";
-			}
-			curl_easy_cleanup(curl);
-			if (url == WEATHER_URL)
-			{
-				std::cout << "GET: " << "Parsing temperature = " << TEMPERATURE_PARSER << std::endl;
-			}
-			else 	std::cout << "GET: " << data << std::endl;
-		}
-		return data;
-	}
-
-	int post_data_to_site(std::string url, json data)
-	{
-		CURLcode ret;
-		CURL* hnd;
-		struct curl_slist* slist1;
-		std::string jsonstr = data.dump();
-
-		slist1 = NULL;
-		slist1 = curl_slist_append(slist1, "Content-Type: application/json");
-
-		hnd = curl_easy_init();
-		if (hnd)
-		{
-			curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
-			curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
-			curl_easy_setopt(hnd, CURLOPT_POSTFIELDS, jsonstr.c_str());
-			curl_easy_setopt(hnd, CURLOPT_USERAGENT, "Mozilla/5.0");
-			curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
-			curl_easy_setopt(hnd, CURLOPT_POSTFIELDSIZE, jsonstr.size());
-			curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
-			curl_easy_setopt(hnd, CURLOPT_CUSTOMREQUEST, "POST");
-			curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
-
-			ret = curl_easy_perform(hnd);
-			if (ret != CURLE_OK) {
-				std::cerr << "Error: " << curl_easy_strerror(ret) << std::endl;
-				return 0;
-			}
-			std::cout << "POST: " << jsonstr << std::endl;
-			curl_easy_cleanup(hnd);
-			curl_slist_free_all(slist1);
-			return 1;
-		} return 0;
-	}
-
-
-	std::string parse_temperature(std::string data) {
-		if (data == "") return "0";
-		int pos = data.find("<span class=\"sign\">"); 
-		if ('-' == data[pos + 19])
-		{
-			int pos_end = data.find("</span>", pos + 27);
-			return "-" + data.substr(pos + 27, pos_end - pos - 27);
-		}
-		else if ('+' == data[pos + 19])
-		{
-			int pos_end = data.find("</span>", pos + 27);
-			return "+" + data.substr(pos + 27, pos_end - pos - 27);
-		}
-		else return "0";
-	}
-	void Parsing()
-	{
-		std::string data = get_data_from_site(WEATHER_URL);
-		TEMPERATURE_PARSER = parse_temperature(data);
-	}
-
-}
-
 
 
 namespace WinProject {
@@ -136,8 +32,9 @@ namespace WinProject {
 		MyForm(void)
 		{
 			InitializeComponent();
-			Parser::Parsing();
-			this->TextYopta->Text = gcnew String(TEMPERATURE_PARSER.c_str());
+			Parser::ParseSite Pars;
+			Pars.Parsing();
+			this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 			timer1->Enabled = true;
 			//
 			//TODO: добавьте код конструктора
@@ -305,13 +202,11 @@ namespace WinProject {
 	private: System::Void btnNumber_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
 		Button^ button = safe_cast<Button^>(sender);
+		Parser::ParseSite Pars;
 		if (button->Text == "ќтправить json")
 		{
-			
-			
 			json data = { {"led", ( rand() % 2 ) }};
-
-			if (Parser::post_data_to_site(SERVER_URL + jsPostPC, data))
+			if (Pars.post_data_to_site(Parser::files::postPS, data))
 			{
 				this->TextYopta->Text = gcnew String("”спешно отправилось");
 			}
@@ -324,7 +219,7 @@ namespace WinProject {
 			int count = 0;
 			while (true)
 			{
-				data = Parser::get_data_from_site(SERVER_URL+jsGet);
+				data = Pars.get_data_from_site(Parser::SERVER_URL + Parser::files::getPS);
 				datajs = json::parse(data);
 				result = data[11];
 				if (result == 'n')
@@ -346,8 +241,9 @@ namespace WinProject {
 	}
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 	{
-		Parser::Parsing();
-		this->TextYopta->Text = gcnew String(TEMPERATURE_PARSER.c_str());
+		Parser::ParseSite Pars;
+		Pars.Parsing();
+		this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 	}
 	private: System::Drawing::Point lastPoint;
 
