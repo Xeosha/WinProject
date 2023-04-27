@@ -122,6 +122,7 @@
       <AdditionalDependencies>libcurl_a.lib;Ws2_32.lib;Crypt32.lib;Wldap32.lib;Normaliz.lib;mysqlcppconn-static.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:\С++\WinProject\curl-8.0.1\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;C:\Program Files\MySQL\Connector C++ 8.0\lib64\vs14;C:\Program Files\MySQL\MySQL Server 8.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>main</EntryPointSymbol>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -136,6 +137,7 @@
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MySqlCon.cpp" />
     <ClCompile Include="ParseSite.cpp" />
+    <ClCompile Include="RoundButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Autorisation.h">
@@ -146,6 +148,7 @@
     </ClInclude>
     <ClInclude Include="MySqlCon.h" />
     <ClInclude Include="ParseSite.h" />
+    <ClInclude Include="RoundButton.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Autorisation.resx">

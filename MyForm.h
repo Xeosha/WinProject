@@ -15,7 +15,7 @@ using namespace nlohmann;	// для json
 
 namespace WinProject {
 
-	using namespace System;
+	using namespace System;	
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
@@ -96,10 +96,10 @@ namespace WinProject {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(86, 163);
+			this->button1->Location = System::Drawing::Point(495, 188);
 			this->button1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(165, 92);
+			this->button1->Size = System::Drawing::Size(174, 92);
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Отправить json";
 			this->button1->UseVisualStyleBackColor = true;
@@ -107,10 +107,10 @@ namespace WinProject {
 			// 
 			// TextYopta
 			// 
-			this->TextYopta->Location = System::Drawing::Point(115, 83);
+			this->TextYopta->Location = System::Drawing::Point(495, 144);
 			this->TextYopta->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->TextYopta->Name = L"TextYopta";
-			this->TextYopta->Size = System::Drawing::Size(150, 20);
+			this->TextYopta->Size = System::Drawing::Size(174, 20);
 			this->TextYopta->TabIndex = 1;
 			this->TextYopta->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox);
 			// 
@@ -140,7 +140,7 @@ namespace WinProject {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(86, 278);
+			this->button2->Location = System::Drawing::Point(495, 299);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(174, 101);
 			this->button2->TabIndex = 3;
@@ -151,7 +151,7 @@ namespace WinProject {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(61, 61);
+			this->pictureBox1->Location = System::Drawing::Point(441, 122);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(48, 42);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
@@ -174,7 +174,7 @@ namespace WinProject {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(99)),
 				static_cast<System::Int32>(static_cast<System::Byte>(99)));
-			this->ClientSize = System::Drawing::Size(380, 523);
+			this->ClientSize = System::Drawing::Size(1137, 637);
 			this->Controls->Add(this->Settings);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->close);

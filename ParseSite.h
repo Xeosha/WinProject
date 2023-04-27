@@ -10,11 +10,6 @@ namespace Parser
 
 	using namespace nlohmann;	// дл€ json
 
-	size_t write_data(void* ptr, size_t size, size_t nmemb, std::string* data) {
-		data->append((char*)ptr, size * nmemb);
-		return size * nmemb;
-	}
-
 	std::string WEATHER_URL = "https:\//www.gismeteo.ru/weather-perm-4476/now/";	// откуда парсить темпу погоды
 	std::string SERVER_URL = "http:\//x958887o.beget.tech/";						// ссылка дл€ работы с ардуинкой
 	std::string TEMPERATURE_PARSER = "0";											// обновл€юща€с€ переменна€ темпы в ѕерми
@@ -24,6 +19,11 @@ namespace Parser
 		std::string postPS = "getPC.php";
 		std::string getPS = "new.json";
 	};
+
+	size_t write_data(void* ptr, size_t size, size_t nmemb, std::string* data) {
+		data->append((char*)ptr, size * nmemb);
+		return size * nmemb;
+	}
 
 	ref class ParseSite
 	{

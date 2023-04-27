@@ -6,6 +6,7 @@
 #include "MySqlCon.h"
 
 
+
 namespace WinProject {
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -18,11 +19,15 @@ namespace WinProject {
 	/// <summary>
 	/// Сводка для Autorisation
 	/// </summary>
+	/// 
+
+
 	public ref class Autorisation : public System::Windows::Forms::Form
 	{
 	public:
 		Autorisation(void)
 		{
+			
 			InitializeComponent();
 			this->TextLogin->Text = "ВВЕДИТЕ ЛОГИН";
 			TextLogin->ForeColor = Color::WhiteSmoke;
@@ -34,6 +39,10 @@ namespace WinProject {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			// запретить расширение кнопок
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
+
+			btnClose->FlatAppearance->BorderSize = 0;
+			button2->FlatAppearance->BorderSize = 0;
+			button3->FlatAppearance->BorderSize = 0;
 		}
 		std::string String_to_string(String^ str)
 		{
@@ -126,7 +135,7 @@ namespace WinProject {
 				static_cast<System::Byte>(204)));
 			this->button1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
 				static_cast<System::Int32>(static_cast<System::Byte>(177)));
-			this->button1->Location = System::Drawing::Point(866, 317);
+			this->button1->Location = System::Drawing::Point(861, 305);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(195, 75);
 			this->button1->TabIndex = 3;
@@ -136,13 +145,14 @@ namespace WinProject {
 			// 
 			// button2
 			// 
-			this->button2->BackColor = System::Drawing::Color::WhiteSmoke;
+			this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
+				static_cast<System::Int32>(static_cast<System::Byte>(177)));
 			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
+			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
-			this->button2->Location = System::Drawing::Point(884, 398);
+			this->button2->ForeColor = System::Drawing::Color::WhiteSmoke;
+			this->button2->Location = System::Drawing::Point(884, 386);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(156, 20);
 			this->button2->TabIndex = 5;
@@ -152,12 +162,13 @@ namespace WinProject {
 			// 
 			// button3
 			// 
-			this->button3->BackColor = System::Drawing::Color::WhiteSmoke;
+			this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
+				static_cast<System::Int32>(static_cast<System::Byte>(177)));
+			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
-			this->button3->Location = System::Drawing::Point(929, 277);
+			this->button3->ForeColor = System::Drawing::Color::WhiteSmoke;
+			this->button3->Location = System::Drawing::Point(940, 277);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(151, 22);
 			this->button3->TabIndex = 6;
@@ -201,12 +212,12 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(1191, 583);
 			this->ControlBox = false;
+			this->Controls->Add(this->TextPassword);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnClose);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->TextPassword);
 			this->Controls->Add(this->TextLogin);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
