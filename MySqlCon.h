@@ -3,6 +3,7 @@
 #include <cppconn/driver.h>
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
+#include <vector>
 
 
 ref class MySqlCon
@@ -22,5 +23,7 @@ public:
 		delete stmt;
 		delete con;
 	}
+	std::vector < std::string> ConnectComboBox();
+	std::string GetMailUser(std::string house);
 };
 

@@ -6,7 +6,6 @@
 #include "MySqlCon.h"
 
 
-
 namespace WinProject {
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -43,6 +42,7 @@ namespace WinProject {
 			btnClose->FlatAppearance->BorderSize = 0;
 			button2->FlatAppearance->BorderSize = 0;
 			button3->FlatAppearance->BorderSize = 0;
+
 		}
 		std::string String_to_string(String^ str)
 		{
@@ -264,6 +264,7 @@ private: System::Void btnNumberClick(System::Object^ sender, System::EventArgs^ 
 		}
 		catch (sql::SQLException& e) {
 			std::cout << "SQL error: " << e.what() << std::endl;
+			MessageBox::Show("Соединение не установлено. Проверьте настройки интернета.", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		} 
 	}
 	else if (button->Text == "СОЗДАТЬ АККАУНТ" ||

@@ -16,9 +16,5 @@ void main(array<String^>^ arg)
 
 	WinProject::Autorisation formAutorization;
 	Application::Run(% formAutorization);
-	sql::Driver* driver;
-	sql::Connection* con;
-	sql::PreparedStatement* prep_stmt;
-	sql::ResultSet* res;
 
 }

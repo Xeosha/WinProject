@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "ParseSite.h"
+#include "MySqlCon.h"
 
 
 std::string tempGor			   = "0";											// температура холодной гор€чей воды
@@ -32,10 +34,28 @@ namespace WinProject {
 		MyForm(void)
 		{
 			InitializeComponent();
-			Parser::ParseSite Pars;
-			Pars.Parsing();
+
+			Parser::Parsing();
 			this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+			
+			MySqlCon DB;
+			DB.connection_to_database();
+			std::vector<std::string> arr = DB.ConnectComboBox();
+			for (auto house : arr)
+			{
+				comboBoxUsers->Items->Add(gcnew String(house.c_str()));
+			}
+			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str());
+
+			Parser::Pochta = DB.GetMailUser(arr[0].c_str());
+			Parser::ParsingUserTemperature(Parser::Pochta);
+			std::cout << Parser::TEMPERATURE_USER << std::endl;
+
+			
+			
+
 			timer1->Enabled = true;
+
 			//
 			//TODO: добавьте код конструктора
 			//
@@ -62,6 +82,7 @@ namespace WinProject {
 
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::PictureBox^ Settings;
+	private: System::Windows::Forms::ComboBox^ comboBoxUsers;
 
 
 	private: System::ComponentModel::IContainer^ components;
@@ -90,6 +111,7 @@ namespace WinProject {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->Settings = (gcnew System::Windows::Forms::PictureBox());
+			this->comboBoxUsers = (gcnew System::Windows::Forms::ComboBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Settings))->BeginInit();
 			this->SuspendLayout();
@@ -168,6 +190,14 @@ namespace WinProject {
 			this->Settings->TabIndex = 5;
 			this->Settings->TabStop = false;
 			// 
+			// comboBoxUsers
+			// 
+			this->comboBoxUsers->FormattingEnabled = true;
+			this->comboBoxUsers->Location = System::Drawing::Point(0, 0);
+			this->comboBoxUsers->Name = L"comboBoxUsers";
+			this->comboBoxUsers->Size = System::Drawing::Size(190, 21);
+			this->comboBoxUsers->TabIndex = 6;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -175,6 +205,7 @@ namespace WinProject {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(99)),
 				static_cast<System::Int32>(static_cast<System::Byte>(99)));
 			this->ClientSize = System::Drawing::Size(1137, 637);
+			this->Controls->Add(this->comboBoxUsers);
 			this->Controls->Add(this->Settings);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->close);
@@ -202,11 +233,11 @@ namespace WinProject {
 	private: System::Void btnNumber_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
 		Button^ button = safe_cast<Button^>(sender);
-		Parser::ParseSite Pars;
+
 		if (button->Text == "ќтправить json")
 		{
 			json data = { {"led", ( rand() % 2 ) }};
-			if (Pars.post_data_to_site(Parser::files::postPS, data))
+			if (Parser::post_data_to_site(Parser::files::postPS, data))
 			{
 				this->TextYopta->Text = gcnew String("”спешно отправилось");
 			}
@@ -219,7 +250,7 @@ namespace WinProject {
 			int count = 0;
 			while (true)
 			{
-				data = Pars.get_data_from_site(Parser::SERVER_URL + Parser::files::getPS);
+				data = Parser::get_data_from_site(Parser::SERVER_URL + Parser::files::getPS);
 				datajs = json::parse(data);
 				result = data[11];
 				if (result == 'n')
@@ -238,15 +269,17 @@ namespace WinProject {
 	private: System::Void btn_Close(System::Object^ sender, System::EventArgs^ e) 
 	{
 		this->Close();
+		Application::Exit();
 	}
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 	{
-		Parser::ParseSite Pars;
-		Pars.Parsing();
+
+		Parser::Parsing();
+		MySqlCon DB;
+		DB.connection_to_database();
 		this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 	}
-	private: System::Drawing::Point lastPoint;
-
+	private: System::Drawing::Point lastPoint;	
 	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
 	{
 		if (e->Button == System::Windows::Forms::MouseButtons::Left)

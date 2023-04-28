@@ -20,3 +20,28 @@ bool MySqlCon::check_user_data(std::string login, std::string password)
 		return 0;
 	}
 }
+
+std::vector < std::string> MySqlCon::ConnectComboBox()
+{
+	stmt = con->prepareStatement("SELECT house FROM users");
+	res = stmt->executeQuery();
+
+	std::vector<std::string> arr;
+	while(res->next())
+	{
+		arr.push_back(res->getString("house"));
+	}
+	return arr;
+}
+
+std::string MySqlCon::GetMailUser(std::string house)
+{
+	stmt = con->prepareStatement("SELECT mail FROM users WHERE house=?");
+	stmt->setString(1, house);
+	res = stmt->executeQuery();
+
+	if (res->next())
+		return res->getString("mail");
+	return "";
+
+}
