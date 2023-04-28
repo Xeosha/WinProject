@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "MyForm.h"
-#include <msclr/marshal.h>
+
 #include "MySqlCon.h"
 
 
@@ -44,13 +44,7 @@ namespace WinProject {
 			button3->FlatAppearance->BorderSize = 0;
 
 		}
-		std::string String_to_string(String^ str)
-		{
-			IntPtr ptr = Marshal::StringToHGlobalAnsi(str);
-			std::string res_str = static_cast<char*>(ptr.ToPointer());
-			Marshal::FreeHGlobal(ptr);
-			return res_str;
-		}
+
 
 	protected:
 		/// <summary>

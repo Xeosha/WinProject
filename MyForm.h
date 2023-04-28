@@ -3,20 +3,20 @@
 #include <vector>
 #include "ParseSite.h"
 #include "MySqlCon.h"
+#include <msclr/marshal.h>
 
 
-std::string tempGor			   = "0";											// температура холодной гор€чей воды
-std::string tempXol			   = "0";											// температура холодной гор€чей воды
-std::string tempKomn		   = "0";											// температура в комнате
-std::string PNagr			   = "0";											// мощность нагрева
-std::string pomp			   = "0";											// идет ли подача воды
-
-
-using namespace nlohmann;	// дл€ json
+std::string String_to_string(System::String^ str)
+{
+	System::IntPtr ptr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(str);
+	std::string res_str = static_cast<char*>(ptr.ToPointer());
+	System::Runtime::InteropServices::Marshal::FreeHGlobal(ptr);
+	return res_str;
+}
 
 
 namespace WinProject {
-
+	using namespace nlohmann;	// дл€ json
 	using namespace System;	
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -24,42 +24,33 @@ namespace WinProject {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+
 	/// <summary>
 	/// —водка дл€ MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
-
+	private: 
+		String^ selectedHouse;
+	
 	public:
 		MyForm(void)
 		{
 			InitializeComponent();
 
-			Parser::Parsing();
-			this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
-			
 			MySqlCon DB;
 			DB.connection_to_database();
 			std::vector<std::string> arr = DB.ConnectComboBox();
-			for (auto house : arr)
+			for (auto& house : arr)
 			{
 				comboBoxUsers->Items->Add(gcnew String(house.c_str()));
 			}
 			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str());
 
-			Parser::Pochta = DB.GetMailUser(arr[0].c_str());
-			Parser::ParsingUserTemperature(Parser::Pochta);
-			std::cout << Parser::TEMPERATURE_USER << std::endl;
-
-			
-			
-
 			timer1->Enabled = true;
 
-			//
-			//TODO: добавьте код конструктора
-			//
 		}
+
 
 	protected:
 		/// <summary>
@@ -78,10 +69,16 @@ namespace WinProject {
 
 
 	private: System::Windows::Forms::Timer^ timer1;
+
+
+
 	private: System::Windows::Forms::Button^ button2;
 
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::PictureBox^ Settings;
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::ComboBox^ comboBoxUsers;
 
 
@@ -112,6 +109,9 @@ namespace WinProject {
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->Settings = (gcnew System::Windows::Forms::PictureBox());
 			this->comboBoxUsers = (gcnew System::Windows::Forms::ComboBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Settings))->BeginInit();
 			this->SuspendLayout();
@@ -134,7 +134,6 @@ namespace WinProject {
 			this->TextYopta->Name = L"TextYopta";
 			this->TextYopta->Size = System::Drawing::Size(174, 20);
 			this->TextYopta->TabIndex = 1;
-			this->TextYopta->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox);
 			// 
 			// close
 			// 
@@ -197,6 +196,34 @@ namespace WinProject {
 			this->comboBoxUsers->Name = L"comboBoxUsers";
 			this->comboBoxUsers->Size = System::Drawing::Size(190, 21);
 			this->comboBoxUsers->TabIndex = 6;
+			this->comboBoxUsers->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBoxUsers_SelectedIndexChanged);
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(297, 102);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(35, 13);
+			this->label1->TabIndex = 7;
+			this->label1->Text = L"label1";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(561, 72);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(35, 13);
+			this->label2->TabIndex = 8;
+			this->label2->Text = L"label2";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(827, 102);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(35, 13);
+			this->label3->TabIndex = 9;
+			this->label3->Text = L"label3";
 			// 
 			// MyForm
 			// 
@@ -205,6 +232,9 @@ namespace WinProject {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(99)),
 				static_cast<System::Int32>(static_cast<System::Byte>(99)));
 			this->ClientSize = System::Drawing::Size(1137, 637);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->comboBoxUsers);
 			this->Controls->Add(this->Settings);
 			this->Controls->Add(this->button2);
@@ -264,8 +294,7 @@ namespace WinProject {
 			this->TextYopta->Text = gcnew String("”спешно считалось");
 		}
 	}
-	private: System::Void textBox(System::Object^ sender, System::EventArgs^ e) {
-	}
+
 	private: System::Void btn_Close(System::Object^ sender, System::EventArgs^ e) 
 	{
 		this->Close();
@@ -273,11 +302,12 @@ namespace WinProject {
 	}
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 	{
-
+	
 		Parser::Parsing();
-		MySqlCon DB;
-		DB.connection_to_database();
+		Parser::ParsingUserTemperature(Parser::Pochta);
+		this->label2->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
 		this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+
 	}
 	private: System::Drawing::Point lastPoint;	
 	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
@@ -295,5 +325,26 @@ namespace WinProject {
 			this->Top += e->Y - lastPoint.Y;
 		}
 	}
+private: System::Void comboBoxUsers_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+{
+	selectedHouse = comboBoxUsers->SelectedItem->ToString();
+
+	
+	MySqlCon DB2;
+	DB2.connection_to_database();
+	Parser::Pochta = DB2.GetMailUser(String_to_string(selectedHouse));
+
+	Parser::ParsingUserTemperature(Parser::Pochta);
+
+
+	Parser::files::getPS = Parser::Pochta + ".json";
+
+	this->label1->Text = gcnew String(Parser::Pochta.c_str());
+	this->label2->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
+	this->label3->Text = gcnew String(Parser::files::getPS.c_str());
+	
+	
+}
+
 };
 }

@@ -19,7 +19,8 @@ namespace Parser
 	namespace files
 	{
 		std::string postPS = "getPC.php";
-		std::string getPS = "new.json";
+		std::string getPS = Pochta + ".json";
+		std::string getM = "newM.json";
 	};
 
 	size_t write_data(void* ptr, size_t size, size_t nmemb, std::string* data) {
@@ -114,10 +115,16 @@ namespace Parser
 
 	void ParsingUserTemperature(std::string key)
 	{
-		std::string data = get_data_from_site(SERVER_URL + "newM.json");
+		try {
+			std::string data = get_data_from_site(SERVER_URL + files::getM);
 
-		json js = json::parse(data);
-		TEMPERATURE_USER = js[key];
+			json js = json::parse(data);
+			TEMPERATURE_USER = js[key];
+		}
+		catch (...)
+		{
+			TEMPERATURE_USER = "Пользователь не создал аккаунт.";
+		}
 	}
 
 }
