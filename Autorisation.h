@@ -193,9 +193,9 @@ namespace WinProject {
 			this->btnClose->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnClose->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(98)), static_cast<System::Int32>(static_cast<System::Byte>(163)),
 				static_cast<System::Int32>(static_cast<System::Byte>(247)));
-			this->btnClose->Location = System::Drawing::Point(1135, 12);
+			this->btnClose->Location = System::Drawing::Point(1130, 12);
 			this->btnClose->Name = L"btnClose";
-			this->btnClose->Size = System::Drawing::Size(44, 43);
+			this->btnClose->Size = System::Drawing::Size(49, 47);
 			this->btnClose->TabIndex = 8;
 			this->btnClose->UseVisualStyleBackColor = false;
 			this->btnClose->Click += gcnew System::EventHandler(this, &Autorisation::BtnClose);
