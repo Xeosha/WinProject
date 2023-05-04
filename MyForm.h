@@ -36,6 +36,20 @@ namespace WinProject {
 		Image^ greenlamp;
 		Image^ freelamp;
 	private: System::Windows::Forms::Label^ labelTextTemp1;
+	private: System::Windows::Forms::Button^ btnErrors;
+	private: System::Windows::Forms::PictureBox^ pictureBox5;
+	private: System::Windows::Forms::Button^ btnSettings;
+	private: System::Windows::Forms::PictureBox^ pictureBox6;
+	private: System::Windows::Forms::PictureBox^ pictureBox7;
+	private: System::Windows::Forms::PictureBox^ pictureBox8;
+	private: System::Windows::Forms::PictureBox^ pictureBox9;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::PictureBox^ pictureBox2;
+	private: System::Windows::Forms::PictureBox^ pictureBox3;
+	private: System::Windows::Forms::PictureBox^ pictureBox4;
+	private: System::Windows::Forms::Button^ btnTrands;
+
+
 	private: System::Windows::Forms::PictureBox^ dom123;
 	private: System::Windows::Forms::Button^ close;
 
@@ -62,14 +76,14 @@ namespace WinProject {
 
 
 				
-			l1->FlatAppearance->BorderSize = 0;
-			l2->FlatAppearance->BorderSize = 0;
-			l3->FlatAppearance->BorderSize = 0;
+			l1->FlatAppearance->BorderSize = 0; btnTrands->FlatAppearance->BorderSize = 0;
+			l2->FlatAppearance->BorderSize = 0; btnSettings->FlatAppearance->BorderSize = 0;
+			l3->FlatAppearance->BorderSize = 0; btnErrors->FlatAppearance->BorderSize = 0;
 
 			this->freelamp = l1->BackgroundImage;
 			this->greenlamp = l3->BackgroundImage;
 			
-			dom123->BackColor = Color::Transparent;
+			
 
 			
 			
@@ -152,7 +166,28 @@ namespace WinProject {
 			this->labelTextTemp3 = (gcnew System::Windows::Forms::Label());
 			this->close = (gcnew System::Windows::Forms::Button());
 			this->dom123 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+			this->btnTrands = (gcnew System::Windows::Forms::Button());
+			this->btnErrors = (gcnew System::Windows::Forms::Button());
+			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
+			this->btnSettings = (gcnew System::Windows::Forms::Button());
+			this->pictureBox6 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox7 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox8 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox9 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox6))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -354,11 +389,146 @@ namespace WinProject {
 			this->dom123->BackColor = System::Drawing::Color::Transparent;
 			this->dom123->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"dom123.BackgroundImage")));
 			this->dom123->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->dom123->Location = System::Drawing::Point(485, 290);
+			this->dom123->Location = System::Drawing::Point(764, 180);
 			this->dom123->Name = L"dom123";
 			this->dom123->Size = System::Drawing::Size(189, 112);
 			this->dom123->TabIndex = 22;
 			this->dom123->TabStop = false;
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
+			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox1->Location = System::Drawing::Point(494, 376);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(162, 137);
+			this->pictureBox1->TabIndex = 23;
+			this->pictureBox1->TabStop = false;
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.BackgroundImage")));
+			this->pictureBox2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox2->Location = System::Drawing::Point(846, 282);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(31, 114);
+			this->pictureBox2->TabIndex = 24;
+			this->pictureBox2->TabStop = false;
+			// 
+			// pictureBox3
+			// 
+			this->pictureBox3->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.BackgroundImage")));
+			this->pictureBox3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox3->Location = System::Drawing::Point(744, 390);
+			this->pictureBox3->Name = L"pictureBox3";
+			this->pictureBox3->Size = System::Drawing::Size(133, 67);
+			this->pictureBox3->TabIndex = 25;
+			this->pictureBox3->TabStop = false;
+			// 
+			// pictureBox4
+			// 
+			this->pictureBox4->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox4->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.BackgroundImage")));
+			this->pictureBox4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox4->Location = System::Drawing::Point(615, 424);
+			this->pictureBox4->Name = L"pictureBox4";
+			this->pictureBox4->Size = System::Drawing::Size(137, 33);
+			this->pictureBox4->TabIndex = 26;
+			this->pictureBox4->TabStop = false;
+			// 
+			// btnTrands
+			// 
+			this->btnTrands->BackColor = System::Drawing::Color::Transparent;
+			this->btnTrands->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnTrands.BackgroundImage")));
+			this->btnTrands->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->btnTrands->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnTrands->Location = System::Drawing::Point(653, -1);
+			this->btnTrands->Name = L"btnTrands";
+			this->btnTrands->Size = System::Drawing::Size(133, 69);
+			this->btnTrands->TabIndex = 27;
+			this->btnTrands->UseVisualStyleBackColor = false;
+			// 
+			// btnErrors
+			// 
+			this->btnErrors->BackColor = System::Drawing::Color::Transparent;
+			this->btnErrors->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnErrors.BackgroundImage")));
+			this->btnErrors->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->btnErrors->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnErrors->Location = System::Drawing::Point(889, -1);
+			this->btnErrors->Name = L"btnErrors";
+			this->btnErrors->Size = System::Drawing::Size(133, 71);
+			this->btnErrors->TabIndex = 28;
+			this->btnErrors->UseVisualStyleBackColor = false;
+			// 
+			// pictureBox5
+			// 
+			this->pictureBox5->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox5.BackgroundImage")));
+			this->pictureBox5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox5->Location = System::Drawing::Point(94, 180);
+			this->pictureBox5->Name = L"pictureBox5";
+			this->pictureBox5->Size = System::Drawing::Size(186, 138);
+			this->pictureBox5->TabIndex = 29;
+			this->pictureBox5->TabStop = false;
+			// 
+			// btnSettings
+			// 
+			this->btnSettings->BackColor = System::Drawing::Color::Transparent;
+			this->btnSettings->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnSettings.BackgroundImage")));
+			this->btnSettings->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->btnSettings->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnSettings->Location = System::Drawing::Point(782, 0);
+			this->btnSettings->Name = L"btnSettings";
+			this->btnSettings->Size = System::Drawing::Size(110, 70);
+			this->btnSettings->TabIndex = 30;
+			this->btnSettings->UseVisualStyleBackColor = false;
+			// 
+			// pictureBox6
+			// 
+			this->pictureBox6->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox6->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox6.BackgroundImage")));
+			this->pictureBox6->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox6->Location = System::Drawing::Point(284, 381);
+			this->pictureBox6->Name = L"pictureBox6";
+			this->pictureBox6->Size = System::Drawing::Size(101, 76);
+			this->pictureBox6->TabIndex = 31;
+			this->pictureBox6->TabStop = false;
+			// 
+			// pictureBox7
+			// 
+			this->pictureBox7->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox7->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox7.BackgroundImage")));
+			this->pictureBox7->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox7->Location = System::Drawing::Point(174, 390);
+			this->pictureBox7->Name = L"pictureBox7";
+			this->pictureBox7->Size = System::Drawing::Size(115, 69);
+			this->pictureBox7->TabIndex = 32;
+			this->pictureBox7->TabStop = false;
+			// 
+			// pictureBox8
+			// 
+			this->pictureBox8->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox8->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox8.BackgroundImage")));
+			this->pictureBox8->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox8->Location = System::Drawing::Point(380, 424);
+			this->pictureBox8->Name = L"pictureBox8";
+			this->pictureBox8->Size = System::Drawing::Size(151, 35);
+			this->pictureBox8->TabIndex = 33;
+			this->pictureBox8->TabStop = false;
+			// 
+			// pictureBox9
+			// 
+			this->pictureBox9->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox9->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox9.BackgroundImage")));
+			this->pictureBox9->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox9->Location = System::Drawing::Point(174, 304);
+			this->pictureBox9->Name = L"pictureBox9";
+			this->pictureBox9->Size = System::Drawing::Size(29, 104);
+			this->pictureBox9->TabIndex = 34;
+			this->pictureBox9->TabStop = false;
 			// 
 			// MyForm
 			// 
@@ -369,6 +539,18 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1132, 637);
+			this->Controls->Add(this->pictureBox9);
+			this->Controls->Add(this->pictureBox5);
+			this->Controls->Add(this->pictureBox7);
+			this->Controls->Add(this->pictureBox8);
+			this->Controls->Add(this->pictureBox6);
+			this->Controls->Add(this->btnSettings);
+			this->Controls->Add(this->btnErrors);
+			this->Controls->Add(this->btnTrands);
+			this->Controls->Add(this->pictureBox4);
+			this->Controls->Add(this->pictureBox3);
+			this->Controls->Add(this->pictureBox2);
+			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->dom123);
 			this->Controls->Add(this->labelTextTemp3);
 			this->Controls->Add(this->labelTextTemp2);
@@ -395,6 +577,15 @@ namespace WinProject {
 			this->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseDown);
 			this->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseMove);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox6))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
