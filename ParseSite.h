@@ -103,7 +103,7 @@ namespace Parser
 		else if ('+' == data[pos + 19])
 		{
 			int pos_end = data.find("</span>", pos + 27);
-			return "+" + data.substr(pos + 27, pos_end - pos - 27);
+			return data.substr(pos + 27, pos_end - pos - 27);
 		}
 		else return "0";
 	};
