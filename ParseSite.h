@@ -14,6 +14,7 @@ namespace Parser
 	std::string SERVER_URL = "http:\//x958887o.beget.tech/";						// ссылка для работы с ардуинкой
 	std::string TEMPERATURE_PARSER = "0";											// обновляющаяся переменная темпы в Перми
 	std::string TEMPERATURE_USER = "0";												// температура пользователя
+	std::string TEMPERATURE_ROOM = "0";												// теппература в комнате
 	std::string Pochta = "test@mail.ru";
 
 	namespace files
@@ -113,17 +114,30 @@ namespace Parser
 		TEMPERATURE_PARSER = parse_temperature(data);
 	};
 
-	void ParsingUserTemperature(std::string key)
+	void ParsingUserTemperature()
 	{
 		try {
 			std::string data = get_data_from_site(SERVER_URL + files::getM);
 
 			json js = json::parse(data);
-			TEMPERATURE_USER = js[key];
+			TEMPERATURE_USER = js[Pochta];
 		}
 		catch (...)
 		{
-			TEMPERATURE_USER = "Пользователь не создал аккаунт.";
+			TEMPERATURE_USER = "User is not found";
+		}
+	}
+
+	void ParsingRoomTemperature()
+	{
+		try {
+			std::string data1 = Parser::get_data_from_site(SERVER_URL + files::getPS);
+			json datajs = json::parse(data1);
+			TEMPERATURE_ROOM = datajs["tempKomn"];
+		}
+		catch (...)
+		{
+			TEMPERATURE_ROOM = "ERROR";
 		}
 	}
 

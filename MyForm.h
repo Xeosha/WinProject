@@ -31,17 +31,19 @@ namespace WinProject {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	private: 
+		MySqlCon DB;
 		String^ selectedHouse;
 		Image^ greenlamp;
-	private: System::Windows::Forms::Label^ labelL3;
-		   Image^ freelamp;
-	
+		Image^ freelamp;
+		bool pusk, avto, ruch;
+	private: System::Windows::Forms::Label^ tempLabel1;
+	private: System::Windows::Forms::Label^ tempLabel2;
+	private: System::Windows::Forms::Label^ tempLabel3;
 	public:
 		MyForm(void)
 		{
 			InitializeComponent();
-
-			MySqlCon DB;
+			pusk = 0; avto = 1; ruch = 0;
 			DB.connection_to_database();
 			std::vector<std::string> arr = DB.ConnectComboBox();
 			for (auto& house : arr)
@@ -50,15 +52,15 @@ namespace WinProject {
 			}
 			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str());
 
-			Parser::Parsing();
-			this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+
+				
 			l1->FlatAppearance->BorderSize = 0;
 			l2->FlatAppearance->BorderSize = 0;
 			l3->FlatAppearance->BorderSize = 0;
 
 			this->freelamp = l1->BackgroundImage;
 			this->greenlamp = l3->BackgroundImage;
-
+		
 			timer1->Enabled = true;
 		}
 
@@ -92,6 +94,7 @@ namespace WinProject {
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ labelLamp1;
 	private: System::Windows::Forms::Label^ labelLamp2;
+	private: System::Windows::Forms::Label^ labelLamp3;
 	private: System::Windows::Forms::Button^ l1;
 	private: System::Windows::Forms::Button^ l2;
 	private: System::Windows::Forms::Button^ l3;
@@ -132,7 +135,10 @@ namespace WinProject {
 			this->l3 = (gcnew System::Windows::Forms::Button());
 			this->labelLamp1 = (gcnew System::Windows::Forms::Label());
 			this->labelLamp2 = (gcnew System::Windows::Forms::Label());
-			this->labelL3 = (gcnew System::Windows::Forms::Label());
+			this->labelLamp3 = (gcnew System::Windows::Forms::Label());
+			this->tempLabel1 = (gcnew System::Windows::Forms::Label());
+			this->tempLabel2 = (gcnew System::Windows::Forms::Label());
+			this->tempLabel3 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// button1
@@ -224,7 +230,7 @@ namespace WinProject {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(856, 203);
+			this->label3->Location = System::Drawing::Point(785, 203);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(35, 13);
 			this->label3->TabIndex = 9;
@@ -235,7 +241,7 @@ namespace WinProject {
 			this->l1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"l1.BackgroundImage")));
 			this->l1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->l1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->l1->Location = System::Drawing::Point(21, 39);
+			this->l1->Location = System::Drawing::Point(21, 30);
 			this->l1->Name = L"l1";
 			this->l1->Size = System::Drawing::Size(62, 48);
 			this->l1->TabIndex = 10;
@@ -247,7 +253,7 @@ namespace WinProject {
 			this->l2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"l2.BackgroundImage")));
 			this->l2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->l2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->l2->Location = System::Drawing::Point(21, 93);
+			this->l2->Location = System::Drawing::Point(21, 84);
 			this->l2->Name = L"l2";
 			this->l2->Size = System::Drawing::Size(62, 48);
 			this->l2->TabIndex = 11;
@@ -259,7 +265,7 @@ namespace WinProject {
 			this->l3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"l3.BackgroundImage")));
 			this->l3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->l3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->l3->Location = System::Drawing::Point(21, 147);
+			this->l3->Location = System::Drawing::Point(21, 138);
 			this->l3->Name = L"l3";
 			this->l3->Size = System::Drawing::Size(62, 48);
 			this->l3->TabIndex = 12;
@@ -272,7 +278,7 @@ namespace WinProject {
 			this->labelLamp1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->labelLamp1->ForeColor = System::Drawing::Color::White;
-			this->labelLamp1->Location = System::Drawing::Point(101, 48);
+			this->labelLamp1->Location = System::Drawing::Point(89, 39);
 			this->labelLamp1->Name = L"labelLamp1";
 			this->labelLamp1->Size = System::Drawing::Size(99, 25);
 			this->labelLamp1->TabIndex = 13;
@@ -284,23 +290,50 @@ namespace WinProject {
 			this->labelLamp2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->labelLamp2->ForeColor = System::Drawing::Color::White;
-			this->labelLamp2->Location = System::Drawing::Point(101, 102);
+			this->labelLamp2->Location = System::Drawing::Point(89, 93);
 			this->labelLamp2->Name = L"labelLamp2";
 			this->labelLamp2->Size = System::Drawing::Size(69, 25);
 			this->labelLamp2->TabIndex = 14;
 			this->labelLamp2->Text = L"ÀÂÒÎ";
 			// 
-			// labelL3
+			// labelLamp3
 			// 
-			this->labelL3->AutoSize = true;
-			this->labelL3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelLamp3->AutoSize = true;
+			this->labelLamp3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labelL3->ForeColor = System::Drawing::Color::White;
-			this->labelL3->Location = System::Drawing::Point(101, 156);
-			this->labelL3->Name = L"labelL3";
-			this->labelL3->Size = System::Drawing::Size(71, 25);
-			this->labelL3->TabIndex = 15;
-			this->labelL3->Text = L"ÑÒÎÏ";
+			this->labelLamp3->ForeColor = System::Drawing::Color::White;
+			this->labelLamp3->Location = System::Drawing::Point(89, 147);
+			this->labelLamp3->Name = L"labelLamp3";
+			this->labelLamp3->Size = System::Drawing::Size(71, 25);
+			this->labelLamp3->TabIndex = 15;
+			this->labelLamp3->Text = L"ÑÒÎÏ";
+			// 
+			// tempLabel1
+			// 
+			this->tempLabel1->AutoSize = true;
+			this->tempLabel1->Location = System::Drawing::Point(1047, 18);
+			this->tempLabel1->Name = L"tempLabel1";
+			this->tempLabel1->Size = System::Drawing::Size(35, 13);
+			this->tempLabel1->TabIndex = 16;
+			this->tempLabel1->Text = L"label4";
+			// 
+			// tempLabel2
+			// 
+			this->tempLabel2->AutoSize = true;
+			this->tempLabel2->Location = System::Drawing::Point(1047, 48);
+			this->tempLabel2->Name = L"tempLabel2";
+			this->tempLabel2->Size = System::Drawing::Size(35, 13);
+			this->tempLabel2->TabIndex = 17;
+			this->tempLabel2->Text = L"label4";
+			// 
+			// tempLabel3
+			// 
+			this->tempLabel3->AutoSize = true;
+			this->tempLabel3->Location = System::Drawing::Point(1047, 74);
+			this->tempLabel3->Name = L"tempLabel3";
+			this->tempLabel3->Size = System::Drawing::Size(35, 13);
+			this->tempLabel3->TabIndex = 18;
+			this->tempLabel3->Text = L"label4";
 			// 
 			// MyForm
 			// 
@@ -309,7 +342,10 @@ namespace WinProject {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
 				static_cast<System::Int32>(static_cast<System::Byte>(177)));
 			this->ClientSize = System::Drawing::Size(1137, 637);
-			this->Controls->Add(this->labelL3);
+			this->Controls->Add(this->tempLabel3);
+			this->Controls->Add(this->tempLabel2);
+			this->Controls->Add(this->tempLabel1);
+			this->Controls->Add(this->labelLamp3);
 			this->Controls->Add(this->labelLamp2);
 			this->Controls->Add(this->labelLamp1);
 			this->Controls->Add(this->l3);
@@ -352,23 +388,6 @@ namespace WinProject {
 		}
 		else if (button->Text == "Ïðèíÿòü json")
 		{
-			char result = 'n';
-			json datajs;
-			std::string data;
-			int count = 0;
-			while (true)
-			{
-				data = Parser::get_data_from_site(Parser::SERVER_URL + Parser::files::getPS);
-				datajs = json::parse(data);
-				result = data[11];
-				if (result == 'n')
-				{
-					Sleep(500);
-					count++;
-					if (count == 10) { return; }
-				}
-				else break;
-			}
 			this->TextYopta->Text = gcnew String("Óñïåøíî ñ÷èòàëîñü");
 		}
 	}
@@ -381,9 +400,18 @@ namespace WinProject {
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 	{
 		Parser::Parsing();
-		Parser::ParsingUserTemperature(Parser::Pochta);
+		Parser::ParsingUserTemperature();
 		this->label2->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
 		this->TextYopta->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+
+		Parser::ParsingRoomTemperature();
+
+		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
+		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
+
+		json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"ruch", int(ruch)}, {"pusk", int(pusk)} };
+		Parser::post_data_to_site(Parser::files::postPS, data);
 
 	}
 	private: System::Drawing::Point lastPoint;	
@@ -406,50 +434,55 @@ private: System::Void comboBoxUsers_SelectedIndexChanged(System::Object^ sender,
 {
 	selectedHouse = comboBoxUsers->SelectedItem->ToString();
 
-	
-	MySqlCon DB2;
-	DB2.connection_to_database();
-	Parser::Pochta = DB2.GetMailUser(String_to_string(selectedHouse));
+	DB.connection_to_database();
+	Parser::Pochta = DB.GetMailUser(String_to_string(selectedHouse));
 
-	Parser::ParsingUserTemperature(Parser::Pochta);
-
+	Parser::ParsingUserTemperature();
 
 	Parser::files::getPS = Parser::Pochta + ".json";
+
+	Parser::Parsing();
+	Parser::ParsingRoomTemperature();
+
+	this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
+	this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+	this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
 
 	this->label1->Text = gcnew String(Parser::Pochta.c_str());
 	this->label2->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
 	this->label3->Text = gcnew String(Parser::files::getPS.c_str());
-	
-	
 }
 
 
 private: System::Void l2_click(System::Object^ sender, System::EventArgs^ e)
 {
-	if (l2->BackgroundImage == freelamp)
+	if (l2->BackgroundImage != greenlamp)
 	{
 		l2->BackgroundImage = greenlamp;
 		l1->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
+		pusk = 1; avto = 1; ruch = 0;
 	}
 
 }
 private: System::Void l1_click(System::Object^ sender, System::EventArgs^ e) 
 {
-	if (l1->BackgroundImage == freelamp)
+	if (l1->BackgroundImage != greenlamp)
 	{
 		l1->BackgroundImage = greenlamp;
 		l2->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
+		pusk = 1; avto = 0; ruch = 1;
 	}
 }
 private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e) 
 {
-	if (l3->BackgroundImage == freelamp)
+	if (l3->BackgroundImage != greenlamp)
 	{
 		l3->BackgroundImage = greenlamp;
 		l1->BackgroundImage = freelamp;
 		l2->BackgroundImage = freelamp;
+		pusk = 0; avto = 0; ruch = 0;
 	}
 }
 };
