@@ -36,6 +36,8 @@ namespace WinProject {
 		Image^ greenlamp;
 		Image^ freelamp;
 	private: System::Windows::Forms::Label^ labelTextTemp1;
+	private: System::Windows::Forms::Label^ label8;
+	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::PictureBox^ pictureBox11;
 	private: System::Windows::Forms::Button^ button1;
@@ -85,8 +87,7 @@ namespace WinProject {
 			{
 				comboBoxUsers->Items->Add(gcnew String(house.c_str()));
 			}
-			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str());
-			
+			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str()); 
 			this->l1->FlatAppearance->BorderSize = 0; this->btnTrands->FlatAppearance->BorderSize = 0;
 			this->l2->FlatAppearance->BorderSize = 0; this->btnSettings->FlatAppearance->BorderSize = 0;
 			this->l3->FlatAppearance->BorderSize = 0; this->btnErrors->FlatAppearance->BorderSize = 0;
@@ -172,6 +173,8 @@ namespace WinProject {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox11 = (gcnew System::Windows::Forms::PictureBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->label8 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -666,6 +669,31 @@ namespace WinProject {
 			this->label7->TabIndex = 48;
 			this->label7->Text = L"Давление газа";
 			// 
+			// textBox1
+			// 
+			this->textBox1->BackColor = System::Drawing::Color::WhiteSmoke;
+			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBox1->Location = System::Drawing::Point(327, 323);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(131, 22);
+			this->textBox1->TabIndex = 49;
+			this->textBox1->Visible = false;
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->BackColor = System::Drawing::Color::Transparent;
+			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label8->ForeColor = System::Drawing::Color::White;
+			this->label8->Location = System::Drawing::Point(681, 80);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(249, 25);
+			this->label8->TabIndex = 50;
+			this->label8->Text = L"Расход газа за месяц";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -675,6 +703,8 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1132, 637);
+			this->Controls->Add(this->label8);
+			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->pictureBox11);
 			this->Controls->Add(this->button1);
@@ -742,7 +772,6 @@ namespace WinProject {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
 		}
 #pragma endregion
 	//private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {}
@@ -753,6 +782,7 @@ namespace WinProject {
 
 		if (button->Text == "ОТПРАВИТЬ")
 		{
+			Parser::PNagr = String_to_string(textBox1->Text);
 			json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"Pruch", Parser::PNagr}, {"pusk", int(pusk)} };
 			Parser::post_data_to_site(Parser::files::postPS, data);
 		}
@@ -768,7 +798,10 @@ namespace WinProject {
 		Parser::Parsing();
 		Parser::ParsingUserTemperature();
 		Parser::ParsingRoomTemperature();
-
+		if (ruch)
+		{
+			Parser::PNagr = String_to_string(textBox1->Text);
+		}
 		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
@@ -777,6 +810,17 @@ namespace WinProject {
 			json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"Pruch", Parser::PNagr}, {"pusk", int(pusk)} };
 			Parser::post_data_to_site(Parser::files::postPS, data);
 		}
+		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
+		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
+		this->label1->Text = gcnew String(("Температура горячей воды: " + Parser::tmpHotWater).c_str());
+		this->label2->Text = gcnew String(("Давление воды: " + Parser::davlVod).c_str());
+		this->label3->Text = gcnew String(("Температура холодной воды: " + Parser::tmpColdWater).c_str());
+		this->label7->Text = gcnew String(("Давление газа: " + Parser::davlGaza).c_str());
+		this->label6->Text = gcnew String(("Расход воздуха: " + Parser::rasxVozd).c_str());
+		this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
+		this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
+		this->label8->Text = gcnew String(("Расход газа за месяц: " + Parser::rasxGazaMonth).c_str());
 	}
 	private: System::Drawing::Point lastPoint;	
 	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
@@ -818,7 +862,7 @@ private: System::Void comboBoxUsers_SelectedIndexChanged(System::Object^ sender,
 	this->label6->Text = gcnew String(("Расход воздуха: " + Parser::rasxVozd).c_str());
 	this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
 	this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
-
+	this->label8->Text = gcnew String(("Расход газа за месяц: " + Parser::rasxGazaMonth).c_str());
 }
 
 
@@ -832,6 +876,7 @@ private: System::Void l2_click(System::Object^ sender, System::EventArgs^ e)
 		pusk = 1; avto = 1; ruch = 0; 
 		close->Visible = false;
 		button1->Visible = false;
+		textBox1->Visible = false;
 	}
 
 }
@@ -845,6 +890,8 @@ private: System::Void l1_click(System::Object^ sender, System::EventArgs^ e)
 		pusk = 1; avto = 0; ruch = 1; 
 		close->Visible = true;
 		button1->Visible = true;
+		textBox1->Visible = true;
+		textBox1->Text = gcnew String(Parser::PNagr.c_str());
 	}
 }
 private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e) 
@@ -857,6 +904,7 @@ private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e)
 		pusk = 0; avto = 0; ruch = 0; 
 		close->Visible = false;
 		button1->Visible = false;
+		textBox1->Visible = false;
 	}
 }
 };
