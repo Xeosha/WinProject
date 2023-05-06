@@ -36,6 +36,8 @@ namespace WinProject {
 		Image^ greenlamp;
 		Image^ freelamp;
 	private: System::Windows::Forms::Label^ labelTextTemp1;
+	private: System::Windows::Forms::Button^ button1;
+
 	private: System::Windows::Forms::PictureBox^ pictureBox10;
 	private: System::Windows::Forms::PictureBox^ pictureBox11;
 	private: System::Windows::Forms::PictureBox^ pictureBox12;
@@ -67,8 +69,6 @@ namespace WinProject {
 
 	private: System::Windows::Forms::Label^ labelTextTemp2;
 	private: System::Windows::Forms::Label^ labelTextTemp3;
-
-
 		   bool pusk, avto, ruch;
 	private: System::Windows::Forms::Label^ tempLabel1;
 	private: System::Windows::Forms::Label^ tempLabel2;
@@ -76,8 +76,8 @@ namespace WinProject {
 	public:
 		MyForm(void)
 		{
-			InitializeComponent();
 			pusk = 0; avto = 1; ruch = 0;
+			InitializeComponent();
 			DB.connection_to_database();
 			std::vector<std::string> arr = DB.ConnectComboBox();
 			for (auto& house : arr)
@@ -87,22 +87,14 @@ namespace WinProject {
 			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str());
 
 
-				
+
 			l1->FlatAppearance->BorderSize = 0; btnTrands->FlatAppearance->BorderSize = 0;
 			l2->FlatAppearance->BorderSize = 0; btnSettings->FlatAppearance->BorderSize = 0;
 			l3->FlatAppearance->BorderSize = 0; btnErrors->FlatAppearance->BorderSize = 0;
 
 			this->freelamp = l1->BackgroundImage;
 			this->greenlamp = l2->BackgroundImage;
-			
-			
-
-			
-			
-			
-			
-	
-
+			button1->Visible = false;
 			timer1->Enabled = true;
 		}
 
@@ -113,38 +105,16 @@ namespace WinProject {
 		/// </summary>
 		~MyForm()
 		{
-			if (components)
-			{
-
-			}
 		}
-
-
-
-
-
 	private: System::Windows::Forms::Timer^ timer1;
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::Label^ labelLamp1;
 	private: System::Windows::Forms::Label^ labelLamp2;
 	private: System::Windows::Forms::Label^ labelLamp3;
 	private: System::Windows::Forms::Button^ l1;
 	private: System::Windows::Forms::Button^ l2;
 	private: System::Windows::Forms::Button^ l3;
-
 	private: System::Windows::Forms::ComboBox^ comboBoxUsers;
-
-
 	private: System::ComponentModel::IContainer^ components;
-
 	protected:
 
 	private:
@@ -201,6 +171,7 @@ namespace WinProject {
 			this->pictureBox13 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox14 = (gcnew System::Windows::Forms::PictureBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -402,7 +373,7 @@ namespace WinProject {
 			this->close->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->close->Font = (gcnew System::Drawing::Font(L"Marlett", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->close->ForeColor = System::Drawing::Color::Transparent;
+			this->close->ForeColor = System::Drawing::Color::Black;
 			this->close->Location = System::Drawing::Point(1085, 571);
 			this->close->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->close->Name = L"close";
@@ -595,7 +566,7 @@ namespace WinProject {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->BackColor = System::Drawing::Color::Transparent;
-			this->label1->Location = System::Drawing::Point(639, 473);
+			this->label1->Location = System::Drawing::Point(639, 469);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(80, 13);
 			this->label1->TabIndex = 38;
@@ -615,7 +586,7 @@ namespace WinProject {
 			// 
 			this->label3->AutoSize = true;
 			this->label3->BackColor = System::Drawing::Color::Transparent;
-			this->label3->Location = System::Drawing::Point(603, 222);
+			this->label3->Location = System::Drawing::Point(614, 221);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(80, 13);
 			this->label3->TabIndex = 40;
@@ -673,6 +644,18 @@ namespace WinProject {
 			this->label6->TabIndex = 45;
 			this->label6->Text = L"Ðàñõîä âîçäóõà: ";
 			// 
+			// button1
+			// 
+			this->button1->Font = (gcnew System::Drawing::Font(L"Palatino Linotype", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1->Location = System::Drawing::Point(925, 570);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(154, 42);
+			this->button1->TabIndex = 46;
+			this->button1->Text = L"ÎÒÏÐÀÂÈÒÜ";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::btnNumber_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -682,6 +665,7 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1132, 637);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->pictureBox14);
 			this->Controls->Add(this->pictureBox13);
@@ -827,7 +811,9 @@ private: System::Void l2_click(System::Object^ sender, System::EventArgs^ e)
 		l2->BackgroundImage = greenlamp;
 		l1->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
-		pusk = 1; avto = 1; ruch = 0;
+		pusk = 1; avto = 1; ruch = 0; 
+		close->Visible = false; 
+		button1->Visible = false;
 	}
 
 }
@@ -838,7 +824,9 @@ private: System::Void l1_click(System::Object^ sender, System::EventArgs^ e)
 		l1->BackgroundImage = greenlamp;
 		l2->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
-		pusk = 1; avto = 0; ruch = 1;
+		pusk = 1; avto = 0; ruch = 1; 
+		close->Visible = true; 
+		button1->Visible = true;
 	}
 }
 private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e) 
@@ -848,7 +836,9 @@ private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e)
 		l3->BackgroundImage = greenlamp;
 		l1->BackgroundImage = freelamp;
 		l2->BackgroundImage = freelamp;
-		pusk = 0; avto = 0; ruch = 0;
+		pusk = 0; avto = 0; ruch = 0; 
+		close->Visible = false; 
+		button1->Visible = false;
 	}
 }
 };
