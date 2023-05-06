@@ -47,7 +47,7 @@ namespace WinProject {
 	private: System::Windows::Forms::PictureBox^ pictureBox13;
 	private: System::Windows::Forms::PictureBox^ pictureBox14;
 	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::Button^ button1;
+
 	private: System::Windows::Forms::Button^ btnErrors;
 	private: System::Windows::Forms::PictureBox^ pictureBox5;
 	private: System::Windows::Forms::Button^ btnSettings;
@@ -201,7 +201,6 @@ namespace WinProject {
 			this->pictureBox13 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox14 = (gcnew System::Windows::Forms::PictureBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -410,6 +409,7 @@ namespace WinProject {
 			this->close->Size = System::Drawing::Size(35, 41);
 			this->close->TabIndex = 2;
 			this->close->UseVisualStyleBackColor = false;
+			this->close->Visible = false;
 			this->close->Click += gcnew System::EventHandler(this, &MyForm::btn_Close);
 			// 
 			// dom123
@@ -428,7 +428,7 @@ namespace WinProject {
 			this->pictureBox1->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
 			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->pictureBox1->Location = System::Drawing::Point(494, 376);
+			this->pictureBox1->Location = System::Drawing::Point(494, 375);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(162, 137);
 			this->pictureBox1->TabIndex = 23;
@@ -673,18 +673,6 @@ namespace WinProject {
 			this->label6->TabIndex = 45;
 			this->label6->Text = L"Ðàñõîä âîçäóõà: ";
 			// 
-			// button1
-			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Palatino Linotype", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(912, 571);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(167, 41);
-			this->button1->TabIndex = 46;
-			this->button1->Text = L"ÎÒÏÐÀÂÈÒÜ";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MyForm::btnNumber_Click);
-			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -694,7 +682,6 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1132, 637);
-			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->pictureBox14);
 			this->Controls->Add(this->pictureBox13);
