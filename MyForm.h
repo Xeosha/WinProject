@@ -36,6 +36,18 @@ namespace WinProject {
 		Image^ greenlamp;
 		Image^ freelamp;
 	private: System::Windows::Forms::Label^ labelTextTemp1;
+	private: System::Windows::Forms::PictureBox^ pictureBox10;
+	private: System::Windows::Forms::PictureBox^ pictureBox11;
+	private: System::Windows::Forms::PictureBox^ pictureBox12;
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::Label^ label5;
+	private: System::Windows::Forms::PictureBox^ pictureBox13;
+	private: System::Windows::Forms::PictureBox^ pictureBox14;
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ btnErrors;
 	private: System::Windows::Forms::PictureBox^ pictureBox5;
 	private: System::Windows::Forms::Button^ btnSettings;
@@ -81,7 +93,7 @@ namespace WinProject {
 			l3->FlatAppearance->BorderSize = 0; btnErrors->FlatAppearance->BorderSize = 0;
 
 			this->freelamp = l1->BackgroundImage;
-			this->greenlamp = l3->BackgroundImage;
+			this->greenlamp = l2->BackgroundImage;
 			
 			
 
@@ -178,6 +190,18 @@ namespace WinProject {
 			this->pictureBox7 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox8 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox9 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox10 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox11 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox12 = (gcnew System::Windows::Forms::PictureBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->pictureBox13 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox14 = (gcnew System::Windows::Forms::PictureBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -188,6 +212,11 @@ namespace WinProject {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -367,20 +396,19 @@ namespace WinProject {
 			// 
 			// close
 			// 
-			this->close->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(230)), static_cast<System::Int32>(static_cast<System::Byte>(7)),
-				static_cast<System::Int32>(static_cast<System::Byte>(7)));
-			this->close->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
+			this->close->BackColor = System::Drawing::Color::Transparent;
+			this->close->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"close.BackgroundImage")));
+			this->close->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->close->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->close->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->close->Font = (gcnew System::Drawing::Font(L"Marlett", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->close->ForeColor = System::Drawing::Color::White;
-			this->close->Location = System::Drawing::Point(1097, 584);
+			this->close->ForeColor = System::Drawing::Color::Transparent;
+			this->close->Location = System::Drawing::Point(1085, 571);
 			this->close->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->close->Name = L"close";
-			this->close->Size = System::Drawing::Size(28, 28);
+			this->close->Size = System::Drawing::Size(35, 41);
 			this->close->TabIndex = 2;
-			this->close->Text = L"x";
 			this->close->UseVisualStyleBackColor = false;
 			this->close->Click += gcnew System::EventHandler(this, &MyForm::btn_Close);
 			// 
@@ -411,9 +439,9 @@ namespace WinProject {
 			this->pictureBox2->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.BackgroundImage")));
 			this->pictureBox2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox2->Location = System::Drawing::Point(846, 282);
+			this->pictureBox2->Location = System::Drawing::Point(846, 278);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(31, 114);
+			this->pictureBox2->Size = System::Drawing::Size(14, 150);
 			this->pictureBox2->TabIndex = 24;
 			this->pictureBox2->TabStop = false;
 			// 
@@ -422,9 +450,9 @@ namespace WinProject {
 			this->pictureBox3->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.BackgroundImage")));
 			this->pictureBox3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox3->Location = System::Drawing::Point(744, 390);
+			this->pictureBox3->Location = System::Drawing::Point(792, 424);
 			this->pictureBox3->Name = L"pictureBox3";
-			this->pictureBox3->Size = System::Drawing::Size(133, 67);
+			this->pictureBox3->Size = System::Drawing::Size(68, 33);
 			this->pictureBox3->TabIndex = 25;
 			this->pictureBox3->TabStop = false;
 			// 
@@ -433,9 +461,9 @@ namespace WinProject {
 			this->pictureBox4->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox4->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.BackgroundImage")));
 			this->pictureBox4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox4->Location = System::Drawing::Point(615, 424);
+			this->pictureBox4->Location = System::Drawing::Point(617, 441);
 			this->pictureBox4->Name = L"pictureBox4";
-			this->pictureBox4->Size = System::Drawing::Size(137, 33);
+			this->pictureBox4->Size = System::Drawing::Size(179, 16);
 			this->pictureBox4->TabIndex = 26;
 			this->pictureBox4->TabStop = false;
 			// 
@@ -445,7 +473,7 @@ namespace WinProject {
 			this->btnTrands->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnTrands.BackgroundImage")));
 			this->btnTrands->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->btnTrands->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnTrands->Location = System::Drawing::Point(653, -1);
+			this->btnTrands->Location = System::Drawing::Point(653, 1);
 			this->btnTrands->Name = L"btnTrands";
 			this->btnTrands->Size = System::Drawing::Size(133, 69);
 			this->btnTrands->TabIndex = 27;
@@ -468,7 +496,7 @@ namespace WinProject {
 			this->pictureBox5->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox5.BackgroundImage")));
 			this->pictureBox5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->pictureBox5->Location = System::Drawing::Point(94, 180);
+			this->pictureBox5->Location = System::Drawing::Point(138, 190);
 			this->pictureBox5->Name = L"pictureBox5";
 			this->pictureBox5->Size = System::Drawing::Size(186, 138);
 			this->pictureBox5->TabIndex = 29;
@@ -491,9 +519,9 @@ namespace WinProject {
 			this->pictureBox6->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox6->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox6.BackgroundImage")));
 			this->pictureBox6->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox6->Location = System::Drawing::Point(284, 381);
+			this->pictureBox6->Location = System::Drawing::Point(295, 411);
 			this->pictureBox6->Name = L"pictureBox6";
-			this->pictureBox6->Size = System::Drawing::Size(101, 76);
+			this->pictureBox6->Size = System::Drawing::Size(91, 48);
 			this->pictureBox6->TabIndex = 31;
 			this->pictureBox6->TabStop = false;
 			// 
@@ -502,9 +530,9 @@ namespace WinProject {
 			this->pictureBox7->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox7->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox7.BackgroundImage")));
 			this->pictureBox7->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox7->Location = System::Drawing::Point(174, 390);
+			this->pictureBox7->Location = System::Drawing::Point(218, 414);
 			this->pictureBox7->Name = L"pictureBox7";
-			this->pictureBox7->Size = System::Drawing::Size(115, 69);
+			this->pictureBox7->Size = System::Drawing::Size(83, 45);
 			this->pictureBox7->TabIndex = 32;
 			this->pictureBox7->TabStop = false;
 			// 
@@ -513,9 +541,9 @@ namespace WinProject {
 			this->pictureBox8->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox8->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox8.BackgroundImage")));
 			this->pictureBox8->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox8->Location = System::Drawing::Point(380, 424);
+			this->pictureBox8->Location = System::Drawing::Point(380, 441);
 			this->pictureBox8->Name = L"pictureBox8";
-			this->pictureBox8->Size = System::Drawing::Size(151, 35);
+			this->pictureBox8->Size = System::Drawing::Size(151, 18);
 			this->pictureBox8->TabIndex = 33;
 			this->pictureBox8->TabStop = false;
 			// 
@@ -524,11 +552,138 @@ namespace WinProject {
 			this->pictureBox9->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox9->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox9.BackgroundImage")));
 			this->pictureBox9->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox9->Location = System::Drawing::Point(174, 304);
+			this->pictureBox9->Location = System::Drawing::Point(218, 313);
 			this->pictureBox9->Name = L"pictureBox9";
-			this->pictureBox9->Size = System::Drawing::Size(29, 104);
+			this->pictureBox9->Size = System::Drawing::Size(16, 104);
 			this->pictureBox9->TabIndex = 34;
 			this->pictureBox9->TabStop = false;
+			// 
+			// pictureBox10
+			// 
+			this->pictureBox10->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox10->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox10.BackgroundImage")));
+			this->pictureBox10->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox10->Location = System::Drawing::Point(569, 247);
+			this->pictureBox10->Name = L"pictureBox10";
+			this->pictureBox10->Size = System::Drawing::Size(74, 35);
+			this->pictureBox10->TabIndex = 35;
+			this->pictureBox10->TabStop = false;
+			// 
+			// pictureBox11
+			// 
+			this->pictureBox11->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox11->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.BackgroundImage")));
+			this->pictureBox11->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox11->Location = System::Drawing::Point(569, 278);
+			this->pictureBox11->Name = L"pictureBox11";
+			this->pictureBox11->Size = System::Drawing::Size(17, 101);
+			this->pictureBox11->TabIndex = 36;
+			this->pictureBox11->TabStop = false;
+			// 
+			// pictureBox12
+			// 
+			this->pictureBox12->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox12->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox12.BackgroundImage")));
+			this->pictureBox12->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox12->Location = System::Drawing::Point(642, 247);
+			this->pictureBox12->Name = L"pictureBox12";
+			this->pictureBox12->Size = System::Drawing::Size(168, 16);
+			this->pictureBox12->TabIndex = 37;
+			this->pictureBox12->TabStop = false;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->BackColor = System::Drawing::Color::Transparent;
+			this->label1->Location = System::Drawing::Point(639, 473);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(80, 13);
+			this->label1->TabIndex = 38;
+			this->label1->Text = L"Темпаратура: ";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->BackColor = System::Drawing::Color::Transparent;
+			this->label2->Location = System::Drawing::Point(639, 415);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(58, 13);
+			this->label2->TabIndex = 39;
+			this->label2->Text = L"Давление";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->BackColor = System::Drawing::Color::Transparent;
+			this->label3->Location = System::Drawing::Point(603, 222);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(80, 13);
+			this->label3->TabIndex = 40;
+			this->label3->Text = L"Температура: ";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->BackColor = System::Drawing::Color::Transparent;
+			this->label4->Location = System::Drawing::Point(240, 331);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(60, 13);
+			this->label4->TabIndex = 41;
+			this->label4->Text = L"Мощность";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->BackColor = System::Drawing::Color::Transparent;
+			this->label5->Location = System::Drawing::Point(240, 354);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(75, 13);
+			this->label5->TabIndex = 42;
+			this->label5->Text = L"Расход газа: ";
+			// 
+			// pictureBox13
+			// 
+			this->pictureBox13->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox13->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox13.BackgroundImage")));
+			this->pictureBox13->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox13->Location = System::Drawing::Point(494, 509);
+			this->pictureBox13->Name = L"pictureBox13";
+			this->pictureBox13->Size = System::Drawing::Size(92, 36);
+			this->pictureBox13->TabIndex = 43;
+			this->pictureBox13->TabStop = false;
+			// 
+			// pictureBox14
+			// 
+			this->pictureBox14->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox14->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox14.BackgroundImage")));
+			this->pictureBox14->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox14->Location = System::Drawing::Point(369, 527);
+			this->pictureBox14->Name = L"pictureBox14";
+			this->pictureBox14->Size = System::Drawing::Size(131, 18);
+			this->pictureBox14->TabIndex = 44;
+			this->pictureBox14->TabStop = false;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->BackColor = System::Drawing::Color::Transparent;
+			this->label6->Location = System::Drawing::Point(366, 509);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(92, 13);
+			this->label6->TabIndex = 45;
+			this->label6->Text = L"Расход воздуха: ";
+			// 
+			// button1
+			// 
+			this->button1->Font = (gcnew System::Drawing::Font(L"Palatino Linotype", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button1->Location = System::Drawing::Point(912, 571);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(167, 41);
+			this->button1->TabIndex = 46;
+			this->button1->Text = L"ОТПРАВИТЬ";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::btnNumber_Click);
 			// 
 			// MyForm
 			// 
@@ -539,6 +694,18 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1132, 637);
+			this->Controls->Add(this->button1);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->pictureBox14);
+			this->Controls->Add(this->pictureBox13);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->pictureBox12);
+			this->Controls->Add(this->pictureBox11);
+			this->Controls->Add(this->pictureBox10);
 			this->Controls->Add(this->pictureBox9);
 			this->Controls->Add(this->pictureBox5);
 			this->Controls->Add(this->pictureBox7);
@@ -586,6 +753,11 @@ namespace WinProject {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -597,17 +769,10 @@ namespace WinProject {
 	{
 		Button^ button = safe_cast<Button^>(sender);
 
-		if (button->Text == "Отправить json")
+		if (button->Text == "ОТПРАВИТЬ")
 		{
-			json data = { {"led", ( rand() % 2 ) }};
-			if (Parser::post_data_to_site(Parser::files::postPS, data))
-			{
-				/*this->TextYopta->Text = gcnew String("Успешно отправилось");*/
-			}
-		}
-		else if (button->Text == "Принять json")
-		{
-	/*		this->TextYopta->Text = gcnew String("Успешно считалось");*/
+			json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"Pruch", Parser::PNagr}, {"pusk", int(pusk)} };
+			Parser::post_data_to_site(Parser::files::postPS, data);
 		}
 	}
 
@@ -625,10 +790,11 @@ namespace WinProject {
 		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
-
-		json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"ruch", int(ruch)}, {"pusk", int(pusk)} };
-		Parser::post_data_to_site(Parser::files::postPS, data);
-
+		if (avto || !pusk)
+		{
+			json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"Pruch", Parser::PNagr}, {"pusk", int(pusk)} };
+			Parser::post_data_to_site(Parser::files::postPS, data);
+		}
 	}
 	private: System::Drawing::Point lastPoint;	
 	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 

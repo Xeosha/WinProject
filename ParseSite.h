@@ -15,7 +15,9 @@ namespace Parser
 	std::string TEMPERATURE_PARSER = "0";											// обновл€юща€с€ переменна€ темпы в ѕерми
 	std::string TEMPERATURE_USER = "0";												// температура пользовател€
 	std::string TEMPERATURE_ROOM = "0";												// теппература в комнате
-	std::string Pochta = "test@mail.ru";
+	std::string Pochta = "test@mail.ru";											// почта пользовател€
+
+	std::string tmpHotWater, tmpColdWater, PNagr, pomp, rasxVozd, rasxGaza, davlVod, davlGaza, rasxGazaMonth, error;
 
 	namespace files
 	{
@@ -134,6 +136,16 @@ namespace Parser
 			std::string data1 = Parser::get_data_from_site(SERVER_URL + files::getPS);
 			json datajs = json::parse(data1);
 			TEMPERATURE_ROOM = datajs["tempKomn"];
+			tmpHotWater = datajs["tempGor"];
+			tmpColdWater = datajs["tempXol"];
+			error = datajs["error"];
+			PNagr = datajs["PNagr"];
+			pomp = datajs["pomp"];
+			rasxVozd = datajs["rasxVozd"];
+			rasxGaza = datajs["rasxGaza"];
+			davlVod = datajs["davlVod"];
+			davlGaza = datajs["davlGaza"];
+			rasxGazaMonth = datajs["rasxGazaMes"];
 		}
 		catch (...)
 		{
