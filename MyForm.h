@@ -36,10 +36,11 @@ namespace WinProject {
 		Image^ greenlamp;
 		Image^ freelamp;
 	private: System::Windows::Forms::Label^ labelTextTemp1;
+	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::PictureBox^ pictureBox11;
 	private: System::Windows::Forms::Button^ button1;
 
 	private: System::Windows::Forms::PictureBox^ pictureBox10;
-	private: System::Windows::Forms::PictureBox^ pictureBox11;
 	private: System::Windows::Forms::PictureBox^ pictureBox12;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
@@ -85,16 +86,14 @@ namespace WinProject {
 				comboBoxUsers->Items->Add(gcnew String(house.c_str()));
 			}
 			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str());
-
-
-
-			l1->FlatAppearance->BorderSize = 0; btnTrands->FlatAppearance->BorderSize = 0;
-			l2->FlatAppearance->BorderSize = 0; btnSettings->FlatAppearance->BorderSize = 0;
-			l3->FlatAppearance->BorderSize = 0; btnErrors->FlatAppearance->BorderSize = 0;
+			
+			this->l1->FlatAppearance->BorderSize = 0; this->btnTrands->FlatAppearance->BorderSize = 0;
+			this->l2->FlatAppearance->BorderSize = 0; this->btnSettings->FlatAppearance->BorderSize = 0;
+			this->l3->FlatAppearance->BorderSize = 0; this->btnErrors->FlatAppearance->BorderSize = 0;
 
 			this->freelamp = l1->BackgroundImage;
 			this->greenlamp = l2->BackgroundImage;
-			button1->Visible = false;
+			this->button1->Visible = false;
 			timer1->Enabled = true;
 		}
 
@@ -161,7 +160,6 @@ namespace WinProject {
 			this->pictureBox8 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox9 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox10 = (gcnew System::Windows::Forms::PictureBox());
-			this->pictureBox11 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox12 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -172,6 +170,8 @@ namespace WinProject {
 			this->pictureBox14 = (gcnew System::Windows::Forms::PictureBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->pictureBox11 = (gcnew System::Windows::Forms::PictureBox());
+			this->label7 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -183,10 +183,10 @@ namespace WinProject {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -540,17 +540,6 @@ namespace WinProject {
 			this->pictureBox10->TabIndex = 35;
 			this->pictureBox10->TabStop = false;
 			// 
-			// pictureBox11
-			// 
-			this->pictureBox11->BackColor = System::Drawing::Color::Transparent;
-			this->pictureBox11->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.BackgroundImage")));
-			this->pictureBox11->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox11->Location = System::Drawing::Point(569, 278);
-			this->pictureBox11->Name = L"pictureBox11";
-			this->pictureBox11->Size = System::Drawing::Size(17, 101);
-			this->pictureBox11->TabIndex = 36;
-			this->pictureBox11->TabStop = false;
-			// 
 			// pictureBox12
 			// 
 			this->pictureBox12->BackColor = System::Drawing::Color::Transparent;
@@ -656,6 +645,27 @@ namespace WinProject {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::btnNumber_Click);
 			// 
+			// pictureBox11
+			// 
+			this->pictureBox11->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox11->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.BackgroundImage")));
+			this->pictureBox11->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox11->Location = System::Drawing::Point(569, 278);
+			this->pictureBox11->Name = L"pictureBox11";
+			this->pictureBox11->Size = System::Drawing::Size(17, 100);
+			this->pictureBox11->TabIndex = 47;
+			this->pictureBox11->TabStop = false;
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->BackColor = System::Drawing::Color::Transparent;
+			this->label7->Location = System::Drawing::Point(240, 375);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(84, 13);
+			this->label7->TabIndex = 48;
+			this->label7->Text = L"Давление газа";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -665,6 +675,8 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1132, 637);
+			this->Controls->Add(this->label7);
+			this->Controls->Add(this->pictureBox11);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->pictureBox14);
@@ -675,7 +687,6 @@ namespace WinProject {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox12);
-			this->Controls->Add(this->pictureBox11);
 			this->Controls->Add(this->pictureBox10);
 			this->Controls->Add(this->pictureBox9);
 			this->Controls->Add(this->pictureBox5);
@@ -725,10 +736,10 @@ namespace WinProject {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -800,6 +811,13 @@ private: System::Void comboBoxUsers_SelectedIndexChanged(System::Object^ sender,
 	this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 	this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 	this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
+	this->label1->Text = gcnew String(("Температура горячей воды: " + Parser::tmpHotWater).c_str());
+	this->label2->Text = gcnew String(("Давление воды: " + Parser::davlVod).c_str());
+	this->label3->Text = gcnew String(("Температура холодной воды: " + Parser::tmpColdWater).c_str()); 
+	this->label7->Text = gcnew String(("Давление газа: " + Parser::davlGaza).c_str());
+	this->label6->Text = gcnew String(("Расход воздуха: " + Parser::rasxVozd).c_str());
+	this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
+	this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
 
 }
 
@@ -812,7 +830,7 @@ private: System::Void l2_click(System::Object^ sender, System::EventArgs^ e)
 		l1->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
 		pusk = 1; avto = 1; ruch = 0; 
-		close->Visible = false; 
+		close->Visible = false;
 		button1->Visible = false;
 	}
 
@@ -825,7 +843,7 @@ private: System::Void l1_click(System::Object^ sender, System::EventArgs^ e)
 		l2->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
 		pusk = 1; avto = 0; ruch = 1; 
-		close->Visible = true; 
+		close->Visible = true;
 		button1->Visible = true;
 	}
 }
@@ -837,7 +855,7 @@ private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e)
 		l1->BackgroundImage = freelamp;
 		l2->BackgroundImage = freelamp;
 		pusk = 0; avto = 0; ruch = 0; 
-		close->Visible = false; 
+		close->Visible = false;
 		button1->Visible = false;
 	}
 }
