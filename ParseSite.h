@@ -126,7 +126,7 @@ namespace Parser
 		}
 		catch (...)
 		{
-			TEMPERATURE_USER = "User is not found";
+			TEMPERATURE_USER = "25";
 		}
 	}
 
@@ -150,6 +150,16 @@ namespace Parser
 		catch (...)
 		{
 			TEMPERATURE_ROOM = "ERROR";
+			tmpHotWater = "ERROR";
+			tmpColdWater = "ERROR";
+			error = "ERROR";
+			PNagr = "ERROR";
+			pomp = "ERROR";
+			rasxVozd = "ERROR";
+			rasxGaza = "ERROR";
+			davlVod = "ERROR";
+			davlGaza = "ERROR";
+			rasxGazaMonth = "ERROR";
 		}
 	}
 

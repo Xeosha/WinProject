@@ -32,7 +32,7 @@ namespace WinProject {
 	{
 	private: 
 		MySqlCon DB;
-		String^ selectedHouse;
+		String^ selectedHouse;   
 		Image^ greenlamp;
 		Image^ freelamp;
 	private: System::Windows::Forms::Label^ labelTextTemp1;
@@ -46,6 +46,10 @@ namespace WinProject {
 	private: System::Windows::Forms::PictureBox^ pictureBox12;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::Label^ label10;
+
+
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label5;
@@ -79,23 +83,30 @@ namespace WinProject {
 	public:
 		MyForm(void)
 		{
-			pusk = 0; avto = 1; ruch = 0;
-			InitializeComponent();
-			DB.connection_to_database();
-			std::vector<std::string> arr = DB.ConnectComboBox();
-			for (auto& house : arr)
-			{
-				comboBoxUsers->Items->Add(gcnew String(house.c_str()));
-			}
-			comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str()); 
-			this->l1->FlatAppearance->BorderSize = 0; this->btnTrands->FlatAppearance->BorderSize = 0;
-			this->l2->FlatAppearance->BorderSize = 0; this->btnSettings->FlatAppearance->BorderSize = 0;
-			this->l3->FlatAppearance->BorderSize = 0; this->btnErrors->FlatAppearance->BorderSize = 0;
+			try {
+				pusk = 0; avto = 1; ruch = 0;
+				InitializeComponent();
+				DB.connection_to_database();
+				std::vector<std::string> arr = DB.ConnectComboBox();
+				for (auto& house : arr)
+				{
+					comboBoxUsers->Items->Add(gcnew String(house.c_str()));
+				}
+				comboBoxUsers->SelectedItem = gcnew String(arr[0].c_str());
+				this->l1->FlatAppearance->BorderSize = 0; this->btnTrands->FlatAppearance->BorderSize = 0;
+				this->l2->FlatAppearance->BorderSize = 0; this->btnSettings->FlatAppearance->BorderSize = 0;
+				this->l3->FlatAppearance->BorderSize = 0; this->btnErrors->FlatAppearance->BorderSize = 0; 
 
-			this->freelamp = l1->BackgroundImage;
-			this->greenlamp = l2->BackgroundImage;
-			this->button1->Visible = false;
-			timer1->Enabled = true;
+				
+				this->freelamp = l1->BackgroundImage;
+				this->greenlamp = l2->BackgroundImage;
+				this->button1->Visible = false;
+				timer1->Enabled = true;
+			}
+			catch (Exception^ ex)
+			{
+				MessageBox::Show(ex->Message);
+			}
 		}
 
 
@@ -105,6 +116,10 @@ namespace WinProject {
 		/// </summary>
 		~MyForm()
 		{
+			if (components)
+			{
+				delete components;
+			}
 		}
 	private: System::Windows::Forms::Timer^ timer1;
 	private: System::Windows::Forms::Label^ labelLamp1;
@@ -175,6 +190,8 @@ namespace WinProject {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->label10 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -369,6 +386,7 @@ namespace WinProject {
 			// 
 			// close
 			// 
+			this->close->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->close->BackColor = System::Drawing::Color::Transparent;
 			this->close->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"close.BackgroundImage")));
 			this->close->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
@@ -377,7 +395,7 @@ namespace WinProject {
 			this->close->Font = (gcnew System::Drawing::Font(L"Marlett", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->close->ForeColor = System::Drawing::Color::Black;
-			this->close->Location = System::Drawing::Point(1085, 571);
+			this->close->Location = System::Drawing::Point(116, 571);
 			this->close->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->close->Name = L"close";
 			this->close->Size = System::Drawing::Size(35, 41);
@@ -388,6 +406,7 @@ namespace WinProject {
 			// 
 			// dom123
 			// 
+			this->dom123->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->dom123->BackColor = System::Drawing::Color::Transparent;
 			this->dom123->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"dom123.BackgroundImage")));
 			this->dom123->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
@@ -399,6 +418,7 @@ namespace WinProject {
 			// 
 			// pictureBox1
 			// 
+			this->pictureBox1->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox1->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
 			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
@@ -410,6 +430,7 @@ namespace WinProject {
 			// 
 			// pictureBox2
 			// 
+			this->pictureBox2->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox2->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.BackgroundImage")));
 			this->pictureBox2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -421,6 +442,7 @@ namespace WinProject {
 			// 
 			// pictureBox3
 			// 
+			this->pictureBox3->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox3->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.BackgroundImage")));
 			this->pictureBox3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -432,6 +454,7 @@ namespace WinProject {
 			// 
 			// pictureBox4
 			// 
+			this->pictureBox4->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox4->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox4->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.BackgroundImage")));
 			this->pictureBox4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -443,6 +466,7 @@ namespace WinProject {
 			// 
 			// btnTrands
 			// 
+			this->btnTrands->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->btnTrands->BackColor = System::Drawing::Color::Transparent;
 			this->btnTrands->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnTrands.BackgroundImage")));
 			this->btnTrands->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
@@ -455,6 +479,7 @@ namespace WinProject {
 			// 
 			// btnErrors
 			// 
+			this->btnErrors->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->btnErrors->BackColor = System::Drawing::Color::Transparent;
 			this->btnErrors->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnErrors.BackgroundImage")));
 			this->btnErrors->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
@@ -467,6 +492,7 @@ namespace WinProject {
 			// 
 			// pictureBox5
 			// 
+			this->pictureBox5->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox5->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox5.BackgroundImage")));
 			this->pictureBox5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
@@ -478,6 +504,7 @@ namespace WinProject {
 			// 
 			// btnSettings
 			// 
+			this->btnSettings->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->btnSettings->BackColor = System::Drawing::Color::Transparent;
 			this->btnSettings->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnSettings.BackgroundImage")));
 			this->btnSettings->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
@@ -490,6 +517,7 @@ namespace WinProject {
 			// 
 			// pictureBox6
 			// 
+			this->pictureBox6->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox6->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox6->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox6.BackgroundImage")));
 			this->pictureBox6->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -501,6 +529,7 @@ namespace WinProject {
 			// 
 			// pictureBox7
 			// 
+			this->pictureBox7->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox7->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox7->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox7.BackgroundImage")));
 			this->pictureBox7->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -512,6 +541,7 @@ namespace WinProject {
 			// 
 			// pictureBox8
 			// 
+			this->pictureBox8->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox8->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox8->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox8.BackgroundImage")));
 			this->pictureBox8->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -523,6 +553,7 @@ namespace WinProject {
 			// 
 			// pictureBox9
 			// 
+			this->pictureBox9->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox9->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox9->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox9.BackgroundImage")));
 			this->pictureBox9->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -534,6 +565,7 @@ namespace WinProject {
 			// 
 			// pictureBox10
 			// 
+			this->pictureBox10->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox10->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox10->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox10.BackgroundImage")));
 			this->pictureBox10->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -545,6 +577,7 @@ namespace WinProject {
 			// 
 			// pictureBox12
 			// 
+			this->pictureBox12->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox12->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox12->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox12.BackgroundImage")));
 			this->pictureBox12->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -556,6 +589,7 @@ namespace WinProject {
 			// 
 			// label1
 			// 
+			this->label1->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label1->AutoSize = true;
 			this->label1->BackColor = System::Drawing::Color::Transparent;
 			this->label1->Location = System::Drawing::Point(639, 469);
@@ -566,6 +600,7 @@ namespace WinProject {
 			// 
 			// label2
 			// 
+			this->label2->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label2->AutoSize = true;
 			this->label2->BackColor = System::Drawing::Color::Transparent;
 			this->label2->Location = System::Drawing::Point(639, 415);
@@ -576,6 +611,7 @@ namespace WinProject {
 			// 
 			// label3
 			// 
+			this->label3->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label3->AutoSize = true;
 			this->label3->BackColor = System::Drawing::Color::Transparent;
 			this->label3->Location = System::Drawing::Point(614, 221);
@@ -586,6 +622,7 @@ namespace WinProject {
 			// 
 			// label4
 			// 
+			this->label4->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label4->AutoSize = true;
 			this->label4->BackColor = System::Drawing::Color::Transparent;
 			this->label4->Location = System::Drawing::Point(240, 331);
@@ -596,6 +633,7 @@ namespace WinProject {
 			// 
 			// label5
 			// 
+			this->label5->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label5->AutoSize = true;
 			this->label5->BackColor = System::Drawing::Color::Transparent;
 			this->label5->Location = System::Drawing::Point(240, 354);
@@ -606,6 +644,7 @@ namespace WinProject {
 			// 
 			// pictureBox13
 			// 
+			this->pictureBox13->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox13->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox13->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox13.BackgroundImage")));
 			this->pictureBox13->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -617,6 +656,7 @@ namespace WinProject {
 			// 
 			// pictureBox14
 			// 
+			this->pictureBox14->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox14->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox14->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox14.BackgroundImage")));
 			this->pictureBox14->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -628,6 +668,7 @@ namespace WinProject {
 			// 
 			// label6
 			// 
+			this->label6->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label6->AutoSize = true;
 			this->label6->BackColor = System::Drawing::Color::Transparent;
 			this->label6->Location = System::Drawing::Point(366, 509);
@@ -638,9 +679,10 @@ namespace WinProject {
 			// 
 			// button1
 			// 
+			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
 			this->button1->Font = (gcnew System::Drawing::Font(L"Palatino Linotype", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1->Location = System::Drawing::Point(925, 570);
+			this->button1->Location = System::Drawing::Point(961, 570);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(154, 42);
 			this->button1->TabIndex = 46;
@@ -650,6 +692,7 @@ namespace WinProject {
 			// 
 			// pictureBox11
 			// 
+			this->pictureBox11->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->pictureBox11->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox11->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.BackgroundImage")));
 			this->pictureBox11->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -661,6 +704,7 @@ namespace WinProject {
 			// 
 			// label7
 			// 
+			this->label7->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label7->AutoSize = true;
 			this->label7->BackColor = System::Drawing::Color::Transparent;
 			this->label7->Location = System::Drawing::Point(240, 375);
@@ -671,6 +715,7 @@ namespace WinProject {
 			// 
 			// textBox1
 			// 
+			this->textBox1->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->textBox1->BackColor = System::Drawing::Color::WhiteSmoke;
 			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -683,6 +728,7 @@ namespace WinProject {
 			// 
 			// label8
 			// 
+			this->label8->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label8->AutoSize = true;
 			this->label8->BackColor = System::Drawing::Color::Transparent;
 			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -694,6 +740,34 @@ namespace WinProject {
 			this->label8->TabIndex = 50;
 			this->label8->Text = L"Расход газа за месяц";
 			// 
+			// label9
+			// 
+			this->label9->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->label9->AutoSize = true;
+			this->label9->BackColor = System::Drawing::Color::Transparent;
+			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label9->ForeColor = System::Drawing::Color::White;
+			this->label9->Location = System::Drawing::Point(12, 541);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(195, 25);
+			this->label9->TabIndex = 51;
+			this->label9->Text = L"Помпа включена";
+			// 
+			// label10
+			// 
+			this->label10->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->label10->AutoSize = true;
+			this->label10->BackColor = System::Drawing::Color::Transparent;
+			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label10->ForeColor = System::Drawing::Color::White;
+			this->label10->Location = System::Drawing::Point(12, 579);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(98, 25);
+			this->label10->TabIndex = 52;
+			this->label10->Text = L"Ошибки";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -703,6 +777,8 @@ namespace WinProject {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1132, 637);
+			this->Controls->Add(this->label10);
+			this->Controls->Add(this->label9);
 			this->Controls->Add(this->label8);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label7);
@@ -753,6 +829,7 @@ namespace WinProject {
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"WinProject";
+			this->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &MyForm::MyForm_FormClosed);
 			this->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseDown);
 			this->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseMove);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->EndInit();
@@ -772,6 +849,7 @@ namespace WinProject {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
 		}
 #pragma endregion
 	//private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {}
@@ -782,9 +860,16 @@ namespace WinProject {
 
 		if (button->Text == "ОТПРАВИТЬ")
 		{
-			Parser::PNagr = String_to_string(textBox1->Text);
-			json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"Pruch", Parser::PNagr}, {"pusk", int(pusk)} };
-			Parser::post_data_to_site(Parser::files::postPS, data);
+			try
+			{
+				Parser::PNagr = String_to_string(textBox1->Text);
+				json data = { {"tempStreet", stoi(Parser::TEMPERATURE_PARSER)}, {"tempReq", stoi(Parser::TEMPERATURE_USER)}, {"avto", int(avto)}, {"Pruch", stoi(Parser::PNagr)}, {"pusk", int(pusk)} };
+				Parser::post_data_to_site(Parser::files::postPS, data);
+			}
+			catch (...)
+			{
+				MessageBox::Show("Данные неверны", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 	}
 
@@ -804,11 +889,18 @@ namespace WinProject {
 		}
 		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
-		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
+		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str()); 
 		if (avto || !pusk)
 		{
-			json data = { {"tempStreet", Parser::TEMPERATURE_PARSER}, {"tempReq", Parser::TEMPERATURE_USER}, {"avto", int(avto)}, {"Pruch", Parser::PNagr}, {"pusk", int(pusk)} };
-			Parser::post_data_to_site(Parser::files::postPS, data);
+			try
+			{
+				json data = { {"tempStreet", stoi(Parser::TEMPERATURE_PARSER)}, {"tempReq", stoi(Parser::TEMPERATURE_USER)}, {"avto", int(avto)}, {"Pruch", stoi(Parser::PNagr)}, {"pusk", int(pusk)} };
+				Parser::post_data_to_site(Parser::files::postPS, data);
+			}
+			catch (...)
+			{
+				MessageBox::Show("Данные неверны", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
@@ -821,6 +913,16 @@ namespace WinProject {
 		this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
 		this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
 		this->label8->Text = gcnew String(("Расход газа за месяц: " + Parser::rasxGazaMonth).c_str());
+		if (Parser::pomp == "1")
+		{
+			this->label9->Text = gcnew String(("Помпа включена"));
+		}
+		else this->label9->Text = gcnew String(("Помпа выключена"));
+		if (Parser::error == "0")
+		{
+			this->label10->Text = gcnew String("Ошибок нет");
+		}
+		else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
 	}
 	private: System::Drawing::Point lastPoint;	
 	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
@@ -863,6 +965,16 @@ private: System::Void comboBoxUsers_SelectedIndexChanged(System::Object^ sender,
 	this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
 	this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
 	this->label8->Text = gcnew String(("Расход газа за месяц: " + Parser::rasxGazaMonth).c_str());
+	if (Parser::pomp == "1")
+	{
+		this->label9->Text = gcnew String(("Помпа включена"));
+	}
+	else this->label9->Text = gcnew String(("Помпа выключена"));
+	if (Parser::error == "0")
+	{
+		this->label10->Text = gcnew String("Ошибок нет");
+	}
+	else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
 }
 
 
@@ -874,7 +986,6 @@ private: System::Void l2_click(System::Object^ sender, System::EventArgs^ e)
 		l1->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
 		pusk = 1; avto = 1; ruch = 0; 
-		close->Visible = false;
 		button1->Visible = false;
 		textBox1->Visible = false;
 	}
@@ -888,7 +999,6 @@ private: System::Void l1_click(System::Object^ sender, System::EventArgs^ e)
 		l2->BackgroundImage = freelamp;
 		l3->BackgroundImage = freelamp;
 		pusk = 1; avto = 0; ruch = 1; 
-		close->Visible = true;
 		button1->Visible = true;
 		textBox1->Visible = true;
 		textBox1->Text = gcnew String(Parser::PNagr.c_str());
@@ -902,10 +1012,12 @@ private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e)
 		l1->BackgroundImage = freelamp;
 		l2->BackgroundImage = freelamp;
 		pusk = 0; avto = 0; ruch = 0; 
-		close->Visible = false;
 		button1->Visible = false;
 		textBox1->Visible = false;
 	}
+}
+private: System::Void MyForm_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
+	Application::Exit();
 }
 };
 }
