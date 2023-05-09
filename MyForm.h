@@ -4,7 +4,7 @@
 #include "ParseSite.h"
 #include "MySqlCon.h"
 #include <msclr/marshal.h>
-
+#include "AddDelSql.h"
 
 std::string String_to_string(System::String^ str)
 {
@@ -96,7 +96,7 @@ namespace WinProject {
 				this->l1->FlatAppearance->BorderSize = 0; this->btnTrands->FlatAppearance->BorderSize = 0;
 				this->l2->FlatAppearance->BorderSize = 0; this->btnSettings->FlatAppearance->BorderSize = 0;
 				this->l3->FlatAppearance->BorderSize = 0; this->btnErrors->FlatAppearance->BorderSize = 0; 
-
+				
 				
 				this->freelamp = l1->BackgroundImage;
 				this->greenlamp = l2->BackgroundImage;
@@ -509,11 +509,13 @@ namespace WinProject {
 			this->btnSettings->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnSettings.BackgroundImage")));
 			this->btnSettings->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->btnSettings->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnSettings->ForeColor = System::Drawing::Color::Black;
 			this->btnSettings->Location = System::Drawing::Point(782, 0);
 			this->btnSettings->Name = L"btnSettings";
 			this->btnSettings->Size = System::Drawing::Size(110, 70);
 			this->btnSettings->TabIndex = 30;
 			this->btnSettings->UseVisualStyleBackColor = false;
+			this->btnSettings->Click += gcnew System::EventHandler(this, &MyForm::btnSettings_Click);
 			// 
 			// pictureBox6
 			// 
@@ -889,7 +891,7 @@ namespace WinProject {
 		}
 		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
-		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str()); 
+		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
 		if (avto || !pusk)
 		{
 			try
@@ -923,6 +925,24 @@ namespace WinProject {
 			this->label10->Text = gcnew String("Ошибок нет");
 		}
 		else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
+		if (addSql == nullptr || addSql->IsDisposed)
+		{
+			std::cout << "\nОкно не открыто\n";
+		}
+		else
+		{
+			while (addSql->st_add->Count > 0)
+			{
+				comboBoxUsers->Items->Add(addSql->st_add->Pop()->ToString());
+			}
+
+			while (addSql->st_del->Count > 0)
+			{
+				comboBoxUsers->Items->Remove(addSql->st_del->Pop()->ToString());
+			}
+			
+		}
+
 	}
 	private: System::Drawing::Point lastPoint;	
 	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
@@ -1018,6 +1038,19 @@ private: System::Void l3_click(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void MyForm_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
 	Application::Exit();
+}
+private: AddDelSql^ addSql;
+private: System::Void btnSettings_Click(System::Object^ sender, System::EventArgs^ e) 
+{
+	if (addSql == nullptr || addSql->IsDisposed)
+	{
+		addSql = gcnew AddDelSql();
+		addSql->Show();
+	}
+	else
+	{
+		addSql->Focus();
+	}
 }
 };
 }

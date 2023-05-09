@@ -45,3 +45,18 @@ std::string MySqlCon::GetMailUser(std::string house)
 	return "";
 
 }
+
+void MySqlCon::add_house_user(std::string house)
+{
+	stmt = con->prepareStatement("INSERT INTO users (house, mail) VALUES (?, DEFAULT)");
+	stmt->setString(1, house);
+	stmt->execute();
+}
+
+void MySqlCon::del_house_user(std::string house)
+{
+	stmt = con->prepareStatement("DELETE FROM users WHERE house = ?");
+	stmt->setString(1, house);
+	stmt->execute();
+}
+

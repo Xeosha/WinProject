@@ -25,5 +25,7 @@ public:
 	}
 	std::vector < std::string> ConnectComboBox();
 	std::string GetMailUser(std::string house);
+	void add_house_user(std::string house);
+	void del_house_user(std::string house);
 };
 

@@ -133,6 +133,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddDelSql.cpp" />
     <ClCompile Include="Autorisation.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MySqlCon.cpp" />
@@ -140,6 +141,9 @@
     <ClCompile Include="RoundButton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddDelSql.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Autorisation.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -151,6 +155,9 @@
     <ClInclude Include="RoundButton.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AddDelSql.resx">
+      <DependentUpon>AddDelSql.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Autorisation.resx">
       <DependentUpon>Autorisation.h</DependentUpon>
     </EmbeddedResource>
