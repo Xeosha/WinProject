@@ -27,6 +27,7 @@ namespace WinProject {
 	private: 
 		MySqlCon DB;
 	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
+	private: System::ComponentModel::BackgroundWorker^ backgroundWorker3;
 	private: System::ComponentModel::BackgroundWorker^ backgroundWorker2;
 		   String^ selectedHouse;
 		Image^ greenlamp;
@@ -197,6 +198,7 @@ namespace WinProject {
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			this->backgroundWorker2 = (gcnew System::ComponentModel::BackgroundWorker());
+			this->backgroundWorker3 = (gcnew System::ComponentModel::BackgroundWorker());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -786,6 +788,11 @@ namespace WinProject {
 			this->backgroundWorker2->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MyForm::backgroundWorker2_DoWork);
 			this->backgroundWorker2->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MyForm::backgroundWorker2_RunWorkerCompleted);
 			// 
+			// backgroundWorker3
+			// 
+			this->backgroundWorker3->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MyForm::backgroundWorker3_DoWork);
+			this->backgroundWorker3->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MyForm::backgroundWorker3_RunWorkerCompleted);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -881,8 +888,10 @@ namespace WinProject {
 			try
 			{
 				Parser::PNagr = String_to_string(textBox1->Text);
-				json data = { {"tempStreet", stoi(Parser::TEMPERATURE_PARSER)}, {"tempReq", stoi(Parser::TEMPERATURE_USER)}, {"avto", int(avto)}, {"Pruch", stoi(Parser::PNagr)}, {"pusk", int(pusk)} };
-				Parser::post_data_to_site(Parser::files::postPS, data);
+				if (!backgroundWorker3->IsBusy)
+				{
+					backgroundWorker3->RunWorkerAsync();
+				}
 			}
 			catch (...)
 			{
@@ -1086,6 +1095,13 @@ private: System::Void changeLabels()
 		this->label10->Text = gcnew String("Ошибок нет");
 	}
 	else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
+}
+private: System::Void backgroundWorker3_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) 
+{
+	json data = { {"tempStreet", stoi(Parser::TEMPERATURE_PARSER)}, {"tempReq", stoi(Parser::TEMPERATURE_USER)}, {"avto", int(avto)}, {"Pruch", stoi(Parser::PNagr)}, {"pusk", int(pusk)} };
+	Parser::post_data_to_site(Parser::files::postPS, data);
+}
+private: System::Void backgroundWorker3_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
 }
 };
 }

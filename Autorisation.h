@@ -2,9 +2,7 @@
 
 #include <iostream>
 #include "MyForm.h"
-
 #include "MySqlCon.h"
-
 
 namespace WinProject {
 	using namespace System;
