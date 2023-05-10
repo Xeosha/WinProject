@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
+#include "ParseSite.h"
 #include "MySqlCon.h"
 #include <msclr/marshal.h>
 #include "AddDelSql.h"
@@ -27,6 +27,7 @@ namespace WinProject {
 	private: 
 		MySqlCon DB;
 	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
+	private: System::ComponentModel::BackgroundWorker^ backgroundWorker2;
 		   String^ selectedHouse;
 		Image^ greenlamp;
 		Image^ freelamp;
@@ -195,6 +196,7 @@ namespace WinProject {
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
+			this->backgroundWorker2 = (gcnew System::ComponentModel::BackgroundWorker());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -214,7 +216,7 @@ namespace WinProject {
 			// 
 			// timer1
 			// 
-			this->timer1->Interval = 50000;
+			this->timer1->Interval = 10000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
 			// comboBoxUsers
@@ -774,6 +776,16 @@ namespace WinProject {
 			this->label10->TabIndex = 52;
 			this->label10->Text = L"Ошибки";
 			// 
+			// backgroundWorker1
+			// 
+			this->backgroundWorker1->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MyForm::backgroundWorker1_DoWork);
+			this->backgroundWorker1->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MyForm::backgroundWorker1_RunWorkerCompleted);
+			// 
+			// backgroundWorker2
+			// 
+			this->backgroundWorker2->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MyForm::backgroundWorker2_DoWork);
+			this->backgroundWorker2->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MyForm::backgroundWorker2_RunWorkerCompleted);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -886,72 +898,9 @@ namespace WinProject {
 	}
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 	{
-		Parser::Parsing();
-		Parser::ParsingUserTemperature();
-		Parser::ParsingRoomTemperature();
-		if (ruch)
+		if (!backgroundWorker1->IsBusy)
 		{
-			Parser::PNagr = String_to_string(textBox1->Text);
-		}
-		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
-		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
-		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
-		if (avto || !pusk)
-		{
-			try
-			{
-				json data = { {"tempStreet", stoi(Parser::TEMPERATURE_PARSER)}, {"tempReq", stoi(Parser::TEMPERATURE_USER)}, {"avto", int(avto)}, {"Pruch", stoi(Parser::PNagr)}, {"pusk", int(pusk)} };
-				Parser::post_data_to_site(Parser::files::postPS, data);
-			}
-			catch (...)
-			{
-				MessageBox::Show("Данные неверны", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
-		}
-		this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
-		this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
-		this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
-		this->label1->Text = gcnew String(("Температура горячей воды: " + Parser::tmpHotWater).c_str());
-		this->label2->Text = gcnew String(("Давление воды: " + Parser::davlVod).c_str());
-		this->label3->Text = gcnew String(("Температура холодной воды: " + Parser::tmpColdWater).c_str());
-		this->label7->Text = gcnew String(("Давление газа: " + Parser::davlGaza).c_str());
-		this->label6->Text = gcnew String(("Расход воздуха: " + Parser::rasxVozd).c_str());
-		this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
-		this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
-		this->label8->Text = gcnew String(("Расход газа за месяц: " + Parser::rasxGazaMonth).c_str());
-		if (Parser::pomp == "1")
-		{
-			this->label9->Text = gcnew String(("Помпа включена"));
-		}
-		else this->label9->Text = gcnew String(("Помпа выключена"));
-		if (Parser::error == "0")
-		{
-			this->label10->Text = gcnew String("Ошибок нет");
-		}
-		else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
-		if (addSql == nullptr || addSql->IsDisposed)
-		{
-			std::cout << "\nОкно не открыто\n";
-		}
-		else
-		{
-			while (addSql->st_add->Count > 0)
-			{
-				comboBoxUsers->Items->Add(addSql->st_add->Pop()->ToString());
-			}
-
-			while (addSql->st_del->Count > 0)
-			{
-				comboBoxUsers->Items->Remove(addSql->st_del->Pop()->ToString());
-			}	
-		}
-		if (graphic == nullptr || graphic->IsDisposed)
-		{
-			std::cout << "График не открыт\n";
-		}
-		else
-		{
-			graphic->setAttr(Parser::TEMPERATURE_PARSER, Parser::TEMPERATURE_ROOM, Parser::TEMPERATURE_USER, Parser::PNagr);
+			backgroundWorker1->RunWorkerAsync();
 		}
 
 	}
@@ -974,38 +923,13 @@ namespace WinProject {
 private: System::Void comboBoxUsers_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 {
 	selectedHouse = comboBoxUsers->SelectedItem->ToString();
-
 	DB.connection_to_database();
 	Parser::Pochta = DB.GetMailUser(String_to_string(selectedHouse));
-
-	Parser::ParsingUserTemperature();
-
 	Parser::files::getPS = Parser::Pochta + ".json";
-
-	Parser::Parsing();
-	Parser::ParsingRoomTemperature();
-
-	this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
-	this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
-	this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
-	this->label1->Text = gcnew String(("Температура горячей воды: " + Parser::tmpHotWater).c_str());
-	this->label2->Text = gcnew String(("Давление воды: " + Parser::davlVod).c_str());
-	this->label3->Text = gcnew String(("Температура холодной воды: " + Parser::tmpColdWater).c_str()); 
-	this->label7->Text = gcnew String(("Давление газа: " + Parser::davlGaza).c_str());
-	this->label6->Text = gcnew String(("Расход воздуха: " + Parser::rasxVozd).c_str());
-	this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
-	this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
-	this->label8->Text = gcnew String(("Расход газа за месяц: " + Parser::rasxGazaMonth).c_str());
-	if (Parser::pomp == "1")
+	if (!backgroundWorker2->IsBusy)
 	{
-		this->label9->Text = gcnew String(("Помпа включена"));
+		backgroundWorker2->RunWorkerAsync();
 	}
-	else this->label9->Text = gcnew String(("Помпа выключена"));
-	if (Parser::error == "0")
-	{
-		this->label10->Text = gcnew String("Ошибок нет");
-	}
-	else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
 }
 
 
@@ -1060,6 +984,7 @@ private: System::Void btnSettings_Click(System::Object^ sender, System::EventArg
 	}
 	else
 	{
+		addSql->Show();
 		addSql->Focus();
 	}
 }
@@ -1076,6 +1001,91 @@ private: System::Void btnTrands_Click(System::Object^ sender, System::EventArgs^
 	{
 		graphic->Focus();
 	}
+}
+private: System::Void backgroundWorker1_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) 
+{
+	if (ruch)
+	{
+		Parser::PNagr = String_to_string(textBox1->Text);
+	}
+	changeLabels();
+	if (addSql == nullptr || addSql->IsDisposed)
+	{
+		std::cout << "\nОкно не открыто\n";
+	}
+	else
+	{
+		while (addSql->st_add->Count > 0)
+		{
+			comboBoxUsers->Items->Add(addSql->st_add->Pop()->ToString());
+		}
+
+		while (addSql->st_del->Count > 0)
+		{
+			comboBoxUsers->Items->Remove(addSql->st_del->Pop()->ToString());
+		}
+	}
+	if (graphic == nullptr || graphic->IsDisposed)
+	{
+		std::cout << "График не открыт\n";
+	}
+	else
+	{
+		graphic->setAttr(Parser::TEMPERATURE_PARSER, Parser::TEMPERATURE_ROOM, Parser::TEMPERATURE_USER, Parser::PNagr);
+	}
+}
+private: System::Void backgroundWorker1_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) 
+{
+	Parser::Parsing();
+	Parser::ParsingUserTemperature();
+	Parser::ParsingRoomTemperature();
+	if (avto || !pusk)
+	{
+		try
+		{
+			json data = { {"tempStreet", stoi(Parser::TEMPERATURE_PARSER)}, {"tempReq", stoi(Parser::TEMPERATURE_USER)}, {"avto", int(avto)}, {"Pruch", stoi(Parser::PNagr)}, {"pusk", int(pusk)} };
+			Parser::post_data_to_site(Parser::files::postPS, data);
+		}
+		catch (...)
+		{
+			MessageBox::Show("Данные неверны", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+}
+
+private: System::Void backgroundWorker2_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) 
+{
+	Parser::ParsingUserTemperature();
+	Parser::Parsing();
+	Parser::ParsingRoomTemperature();
+}
+private: System::Void backgroundWorker2_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) 
+{
+	changeLabels();
+}
+private: System::Void changeLabels()
+{
+	this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
+	this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
+	this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
+	this->label1->Text = gcnew String(("Температура горячей воды: " + Parser::tmpHotWater).c_str());
+	this->label2->Text = gcnew String(("Давление воды: " + Parser::davlVod).c_str());
+	this->label3->Text = gcnew String(("Температура холодной воды: " + Parser::tmpColdWater).c_str());
+	this->label7->Text = gcnew String(("Давление газа: " + Parser::davlGaza).c_str());
+	this->label6->Text = gcnew String(("Расход воздуха: " + Parser::rasxVozd).c_str());
+	this->label5->Text = gcnew String(("Расход газа: " + Parser::rasxGaza).c_str());
+	this->label4->Text = gcnew String(("Мощность: " + Parser::PNagr).c_str());
+	this->label8->Text = gcnew String(("Расход газа за месяц: " + Parser::rasxGazaMonth).c_str());
+	if (Parser::pomp == "1")
+	{
+		this->label9->Text = gcnew String(("Помпа включена"));
+	}
+	else this->label9->Text = gcnew String(("Помпа выключена"));
+	if (Parser::error == "0")
+	{
+		this->label10->Text = gcnew String("Ошибок нет");
+	}
+	else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
 }
 };
 }

@@ -212,7 +212,7 @@ namespace WinProject {
 		return res_str;
 	}
 	private: System::Void btnClose_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
+		this->Hide();
 	}
 private: System::Drawing::Point lastPoint;
 private: System::Void AddDelSql_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -281,7 +281,7 @@ private: System::Void btnDel_Click(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void AddDelSql_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) 
 {
-	MessageBox::Show("Дождитесь удаление/добавление пользователей, после можете закрыть окно", "OK", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+	//MessageBox::Show("Дождитесь удаление/добавление пользователей, после можете закрыть окно", "OK", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 }
 };
 }

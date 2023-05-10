@@ -3283,7 +3283,7 @@
   <data name="btnSettings.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAE2tJREFUeF7t3QuwJFV9x3EWfBvj+71y6Z65t7tnYTG1SrTErFoqZYxokorRKJgo
+        vAAADrwBlbxySQAAE2tJREFUeF7t3QuwJFV9x3EWfBvj+71y6Z65t7tnYTG1SrTErFoqZYxokorRKJgo
         ShIqCJRmJVWUG8roKhJCUpJIYrAixkCAQDDRlCIJQUrIgrDbfWZZpHjEEoEUoLC7CLt78z9z/1UJe/9z
         p+d1Z86Z76fqVxbl/nv63DPnTPdM9+mDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADApGVZ+1lp7g5v
@@ -3984,8 +3984,11 @@
   <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>104, 17</value>
   </metadata>
+  <metadata name="backgroundWorker2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>268, 17</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>29</value>
+    <value>131</value>
   </metadata>
   <data name="$this.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
