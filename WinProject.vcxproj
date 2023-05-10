@@ -130,11 +130,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddDelSql.cpp" />
     <ClCompile Include="Autorisation.cpp" />
+    <ClCompile Include="GraphicW.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MySqlCon.cpp" />
     <ClCompile Include="ParseSite.cpp" />
@@ -145,6 +147,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Autorisation.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="GraphicW.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MyForm.h">
@@ -160,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Autorisation.resx">
       <DependentUpon>Autorisation.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicW.resx">
+      <DependentUpon>GraphicW.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.h</DependentUpon>

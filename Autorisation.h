@@ -23,6 +23,14 @@ namespace WinProject {
 
 	public ref class Autorisation : public System::Windows::Forms::Form
 	{
+	private: 
+		std::string String_to_string(System::String^ str)
+		{
+			System::IntPtr ptr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(str);
+			std::string res_str = static_cast<char*>(ptr.ToPointer());
+			System::Runtime::InteropServices::Marshal::FreeHGlobal(ptr);
+			return res_str;
+		}
 	public:
 		Autorisation(void)
 		{

@@ -44,6 +44,14 @@ namespace WinProject {
 			if (components)
 			{
 				delete components;
+				while (st_del->Count > 0)
+				{
+					st_del->Pop();
+				}
+				while (st_add->Count > 0)
+				{
+					st_add->Pop();
+				}
 			}
 		}
 	private: System::Windows::Forms::Label^ labelAdd;
@@ -273,8 +281,7 @@ private: System::Void btnDel_Click(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void AddDelSql_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) 
 {
-	MessageBox::Show("Дождитесь удаление/добавление пользователя, после можете закрыть окно", "OK", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+	MessageBox::Show("Дождитесь удаление/добавление пользователей, после можете закрыть окно", "OK", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 }
 };
 }
-

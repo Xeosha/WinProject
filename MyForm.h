@@ -1,18 +1,12 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "ParseSite.h"
+
 #include "MySqlCon.h"
 #include <msclr/marshal.h>
 #include "AddDelSql.h"
+#include "GraphicW.h"
 
-std::string String_to_string(System::String^ str)
-{
-	System::IntPtr ptr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(str);
-	std::string res_str = static_cast<char*>(ptr.ToPointer());
-	System::Runtime::InteropServices::Marshal::FreeHGlobal(ptr);
-	return res_str;
-}
 
 
 namespace WinProject {
@@ -32,7 +26,8 @@ namespace WinProject {
 	{
 	private: 
 		MySqlCon DB;
-		String^ selectedHouse;   
+	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
+		   String^ selectedHouse;
 		Image^ greenlamp;
 		Image^ freelamp;
 	private: System::Windows::Forms::Label^ labelTextTemp1;
@@ -80,6 +75,13 @@ namespace WinProject {
 	private: System::Windows::Forms::Label^ tempLabel1;
 	private: System::Windows::Forms::Label^ tempLabel2;
 	private: System::Windows::Forms::Label^ tempLabel3;
+	private: std::string String_to_string(System::String^ str)
+	{
+		System::IntPtr ptr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(str);
+		std::string res_str = static_cast<char*>(ptr.ToPointer());
+		System::Runtime::InteropServices::Marshal::FreeHGlobal(ptr);
+		return res_str;
+	}
 	public:
 		MyForm(void)
 		{
@@ -192,6 +194,7 @@ namespace WinProject {
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dom123))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -211,7 +214,7 @@ namespace WinProject {
 			// 
 			// timer1
 			// 
-			this->timer1->Interval = 10000;
+			this->timer1->Interval = 50000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
 			// comboBoxUsers
@@ -476,6 +479,7 @@ namespace WinProject {
 			this->btnTrands->Size = System::Drawing::Size(133, 69);
 			this->btnTrands->TabIndex = 27;
 			this->btnTrands->UseVisualStyleBackColor = false;
+			this->btnTrands->Click += gcnew System::EventHandler(this, &MyForm::btnTrands_Click);
 			// 
 			// btnErrors
 			// 
@@ -939,8 +943,15 @@ namespace WinProject {
 			while (addSql->st_del->Count > 0)
 			{
 				comboBoxUsers->Items->Remove(addSql->st_del->Pop()->ToString());
-			}
-			
+			}	
+		}
+		if (graphic == nullptr || graphic->IsDisposed)
+		{
+			std::cout << "График не открыт\n";
+		}
+		else
+		{
+			graphic->setAttr(Parser::TEMPERATURE_PARSER, Parser::TEMPERATURE_ROOM, Parser::TEMPERATURE_USER, Parser::PNagr);
 		}
 
 	}
@@ -1050,6 +1061,20 @@ private: System::Void btnSettings_Click(System::Object^ sender, System::EventArg
 	else
 	{
 		addSql->Focus();
+	}
+}
+private: GraphicW^ graphic;
+private: System::Void btnTrands_Click(System::Object^ sender, System::EventArgs^ e) 
+{
+	if (graphic == nullptr || graphic->IsDisposed)
+	{
+		graphic = gcnew GraphicW();
+		graphic->setAttr(Parser::TEMPERATURE_PARSER, Parser::TEMPERATURE_ROOM, Parser::TEMPERATURE_USER, Parser::PNagr);
+		graphic->Show();
+	}
+	else
+	{
+		graphic->Focus();
 	}
 }
 };
