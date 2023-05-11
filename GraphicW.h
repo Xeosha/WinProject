@@ -150,6 +150,7 @@ namespace WinProject {
 			this->Controls->Add(this->chart);
 			this->Name = L"GraphicW";
 			this->Text = L"GraphicW";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &GraphicW::GraphicW_FormClosing);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart))->EndInit();
 			this->ResumeLayout(false);
 
@@ -181,5 +182,9 @@ namespace WinProject {
 			chart->ChartAreas[0]->AxisX->Interval = 5;
 		}
 	}
+private: System::Void GraphicW_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+	e->Cancel = true;
+	this->Hide();
+}
 };
 }

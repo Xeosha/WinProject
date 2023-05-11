@@ -15,9 +15,10 @@ namespace Parser
 	std::string TEMPERATURE_PARSER = "0";											// обновл€юща€с€ переменна€ темпы в ѕерми
 	std::string TEMPERATURE_USER = "0";												// температура пользовател€
 	std::string TEMPERATURE_ROOM = "0";												// теппература в комнате
+	std::string PNagr = "0";
 	std::string Pochta = "test@mail.ru";											// почта пользовател€
 
-	std::string tmpHotWater, tmpColdWater, PNagr, pomp, rasxVozd, rasxGaza, davlVod, davlGaza, rasxGazaMonth, error;
+	std::string tmpHotWater, tmpColdWater, pomp, rasxVozd, rasxGaza, davlVod, davlGaza, rasxGazaMonth, error;
 
 	namespace files
 	{

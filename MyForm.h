@@ -6,7 +6,8 @@
 #include <msclr/marshal.h>
 #include "AddDelSql.h"
 #include "GraphicW.h"
-
+#include <Windows.h> // для функции MultiByteToWideChar
+#include <vcclr.h> // для преобразования wstring в String
 
 
 namespace WinProject {
@@ -100,8 +101,8 @@ namespace WinProject {
 				this->l1->FlatAppearance->BorderSize = 0; this->btnTrands->FlatAppearance->BorderSize = 0;
 				this->l2->FlatAppearance->BorderSize = 0; this->btnSettings->FlatAppearance->BorderSize = 0;
 				this->l3->FlatAppearance->BorderSize = 0; this->btnErrors->FlatAppearance->BorderSize = 0; 
-				
-				
+
+
 				this->freelamp = l1->BackgroundImage;
 				this->greenlamp = l2->BackgroundImage;
 				this->button1->Visible = false;
@@ -111,6 +112,8 @@ namespace WinProject {
 			{
 				MessageBox::Show(ex->Message);
 			}
+			graphic = gcnew GraphicW();
+			graphic->setAttr(Parser::TEMPERATURE_PARSER, Parser::TEMPERATURE_ROOM, Parser::TEMPERATURE_USER, Parser::PNagr);
 		}
 
 
@@ -1008,6 +1011,7 @@ private: System::Void btnTrands_Click(System::Object^ sender, System::EventArgs^
 	}
 	else
 	{
+		graphic->Show();
 		graphic->Focus();
 	}
 }
@@ -1074,6 +1078,16 @@ private: System::Void backgroundWorker2_RunWorkerCompleted(System::Object^ sende
 }
 private: System::Void changeLabels()
 {
+	std::string utf8String = Parser::error;
+
+	// Преобразуем строку в широкую строку
+	int size = MultiByteToWideChar(CP_UTF8, 0, utf8String.c_str(), -1, NULL, 0);
+	std::wstring wideString(size, 0);
+	MultiByteToWideChar(CP_UTF8, 0, utf8String.c_str(), -1, &wideString[0], size);
+
+	// Преобразуем широкую строку в строку .NET
+	String^ Error = gcnew String(wideString.c_str());
+
 	this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 	this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 	this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());
@@ -1094,7 +1108,7 @@ private: System::Void changeLabels()
 	{
 		this->label10->Text = gcnew String("Ошибок нет");
 	}
-	else this->label10->Text = gcnew String(("Ошибка: " + Parser::error).c_str());
+	else this->label10->Text = gcnew String("Ошибка: ") + Error;
 }
 private: System::Void backgroundWorker3_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) 
 {

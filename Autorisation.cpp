@@ -8,7 +8,7 @@ using namespace System::Windows::Forms;
 [STAThread]
 void main(array<String^>^ arg)
 {
-	setlocale(0, "rus");
+	std::setlocale(LC_CTYPE, "ru_RU.UTF-8");
 
 
 	Application::EnableVisualStyles();
