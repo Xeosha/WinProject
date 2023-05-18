@@ -16,14 +16,14 @@ namespace Parser
 	std::string TEMPERATURE_USER = "0";												// температура пользователя
 	std::string TEMPERATURE_ROOM = "0";												// теппература в комнате
 	std::string PNagr = "0";
-	std::string Pochta = "test@mail.ru";											// почта пользователя
+	std::string error = "0";
 
-	std::string tmpHotWater, tmpColdWater, pomp, rasxVozd, rasxGaza, davlVod, davlGaza, rasxGazaMonth, error;
+	std::string tmpHotWater, tmpColdWater, pomp, rasxVozd, rasxGaza, davlVod, davlGaza, rasxGazaMonth, Adress, Pochta;
 
 	namespace files
 	{
 		std::string postPS = "getPC.php";
-		std::string getPS = Pochta + ".json";
+		std::string getPS = Adress + ".json";
 		std::string getM = "newM.json";
 	};
 
@@ -150,17 +150,17 @@ namespace Parser
 		}
 		catch (...)
 		{
-			TEMPERATURE_ROOM = "ERROR";
-			tmpHotWater = "ERROR";
-			tmpColdWater = "ERROR";
-			error = "ERROR";
-			PNagr = "ERROR";
-			pomp = "ERROR";
-			rasxVozd = "ERROR";
-			rasxGaza = "ERROR";
-			davlVod = "ERROR";
-			davlGaza = "ERROR";
-			rasxGazaMonth = "ERROR";
+			TEMPERATURE_ROOM = "0";
+			tmpHotWater = "0";
+			tmpColdWater = "0";
+			error = "0";
+			PNagr = "0";
+			pomp = "0";
+			rasxVozd = "0";
+			rasxGaza = "0";
+			davlVod = "0";
+			davlGaza = "0";
+			rasxGazaMonth = "0";
 		}
 	}
 

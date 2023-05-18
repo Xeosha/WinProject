@@ -43,10 +43,10 @@ namespace WinProject {
 	public:
 		void setAttr(std::string temp1, std::string temp2, std::string temp3, std::string pnagr)
 		{
-			this->temp1 = gcnew String(temp1.c_str());
-			this->temp2 = gcnew String(temp2.c_str());
-			this->temp3 = gcnew String(temp3.c_str());
-			this->pnagr = gcnew String(pnagr.c_str());
+				this->temp1 = gcnew String(temp1.c_str());
+				this->temp2 = gcnew String(temp2.c_str());
+				this->temp3 = gcnew String(temp3.c_str());
+				this->pnagr = gcnew String(pnagr.c_str());
 		}
 	protected:
 		/// <summary>

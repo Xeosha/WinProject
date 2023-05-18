@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "ParseSite.h"
 #include "MySqlCon.h"
 #include <msclr/marshal.h>
 #include "AddDelSql.h"
@@ -89,7 +88,7 @@ namespace WinProject {
 		MyForm(void)
 		{
 			try {
-				pusk = 0; avto = 1; ruch = 0;
+				pusk = 1; avto = 1; ruch = 0;
 				InitializeComponent();
 				DB.connection_to_database();
 				std::vector<std::string> arr = DB.ConnectComboBox();
@@ -935,9 +934,10 @@ namespace WinProject {
 private: System::Void comboBoxUsers_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 {
 	selectedHouse = comboBoxUsers->SelectedItem->ToString();
+	std::string house = String_to_string(selectedHouse);
 	DB.connection_to_database();
-	Parser::Pochta = DB.GetMailUser(String_to_string(selectedHouse));
-	Parser::files::getPS = Parser::Pochta + ".json";
+	Parser::Pochta = DB.GetMailUser(house);
+	Parser::files::getPS = house + ".json";
 	if (!backgroundWorker2->IsBusy)
 	{
 		backgroundWorker2->RunWorkerAsync();
@@ -1079,15 +1079,13 @@ private: System::Void backgroundWorker2_RunWorkerCompleted(System::Object^ sende
 private: System::Void changeLabels()
 {
 	std::string utf8String = Parser::error;
-
-	// ѕреобразуем строку в широкую строку
+	
 	int size = MultiByteToWideChar(CP_UTF8, 0, utf8String.c_str(), -1, NULL, 0);
 	std::wstring wideString(size, 0);
 	MultiByteToWideChar(CP_UTF8, 0, utf8String.c_str(), -1, &wideString[0], size);
-
 	// ѕреобразуем широкую строку в строку .NET
 	String^ Error = gcnew String(wideString.c_str());
-
+	
 	this->tempLabel1->Text = gcnew String(Parser::TEMPERATURE_ROOM.c_str());
 	this->tempLabel2->Text = gcnew String(Parser::TEMPERATURE_PARSER.c_str());
 	this->tempLabel3->Text = gcnew String(Parser::TEMPERATURE_USER.c_str());

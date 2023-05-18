@@ -2,7 +2,8 @@
 #include <msclr/marshal.h>
 #include <string>
 #include "MySqlCon.h"
-
+#include <nlohmann/json.hpp>
+#include "ParseSite.h"
 
 namespace WinProject {
 
@@ -12,7 +13,7 @@ namespace WinProject {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	using namespace nlohmann;
 	/// <summary>
 	/// Сводка для AddDelSql
 	/// </summary>
@@ -267,6 +268,8 @@ private: System::Void btnAdd_Click(System::Object^ sender, System::EventArgs^ e)
 	MySqlCon Db;
 	Db.connection_to_database();
 	Db.add_house_user(house);
+	json js = { {"Adress", house} };
+	Parser::post_data_to_site(Parser::files::postPS, js);
 	st_add->Push(this->textBoxAdd->Text);
 
 }
@@ -277,6 +280,8 @@ private: System::Void btnDel_Click(System::Object^ sender, System::EventArgs^ e)
 	MySqlCon Db;
 	Db.connection_to_database();
 	Db.del_house_user(house);
+	json js = { {"AdressDel ", house} };
+	Parser::post_data_to_site(Parser::files::postPS, js);
 	st_del->Push(this->textBoxDel->Text);
 }
 private: System::Void AddDelSql_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) 

@@ -65,20 +65,27 @@ namespace WinProject {
 		}
 
 	private: System::Windows::Forms::TextBox^ TextLogin;
-	private: System::Windows::Forms::TextBox^ TextPassword;
+
 	private: System::Windows::Forms::Button^ button1;
 
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ btnClose;
+	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
+	private: System::Windows::Forms::TextBox^ TextPassword;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::PictureBox^ pictureBox2;
+
+
+	private: System::ComponentModel::IContainer^ components;
 	protected:
 
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -87,20 +94,26 @@ namespace WinProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Autorisation::typeid));
 			this->TextLogin = (gcnew System::Windows::Forms::TextBox());
-			this->TextPassword = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->btnClose = (gcnew System::Windows::Forms::Button());
+			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->TextPassword = (gcnew System::Windows::Forms::TextBox());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// TextLogin
 			// 
-			this->TextLogin->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
+			this->TextLogin->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(222)), static_cast<System::Int32>(static_cast<System::Byte>(165)),
+				static_cast<System::Int32>(static_cast<System::Byte>(148)));
 			this->TextLogin->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::World,
 				static_cast<System::Byte>(204), true));
 			this->TextLogin->ForeColor = System::Drawing::Color::White;
@@ -113,28 +126,12 @@ namespace WinProject {
 			this->TextLogin->Enter += gcnew System::EventHandler(this, &Autorisation::TextLogin_Enter);
 			this->TextLogin->Leave += gcnew System::EventHandler(this, &Autorisation::TextLogin_Leave);
 			// 
-			// TextPassword
-			// 
-			this->TextPassword->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
-			this->TextPassword->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::World,
-				static_cast<System::Byte>(204), true));
-			this->TextPassword->ForeColor = System::Drawing::Color::White;
-			this->TextPassword->Location = System::Drawing::Point(837, 239);
-			this->TextPassword->Multiline = true;
-			this->TextPassword->Name = L"TextPassword";
-			this->TextPassword->Size = System::Drawing::Size(243, 32);
-			this->TextPassword->TabIndex = 2;
-			this->TextPassword->Text = L"ВВЕДИТЕ ПАРОЛЬ";
-			this->TextPassword->Enter += gcnew System::EventHandler(this, &Autorisation::TextPassword_Enter);
-			this->TextPassword->Leave += gcnew System::EventHandler(this, &Autorisation::TextPassword_Leave);
-			// 
 			// button1
 			// 
 			this->button1->Font = (gcnew System::Drawing::Font(L"Palatino Linotype", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
+			this->button1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(222)), static_cast<System::Int32>(static_cast<System::Byte>(165)),
+				static_cast<System::Int32>(static_cast<System::Byte>(148)));
 			this->button1->Location = System::Drawing::Point(861, 305);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(195, 75);
@@ -145,8 +142,7 @@ namespace WinProject {
 			// 
 			// button2
 			// 
-			this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
+			this->button2->BackColor = System::Drawing::Color::Transparent;
 			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
 			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -162,8 +158,7 @@ namespace WinProject {
 			// 
 			// button3
 			// 
-			this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
+			this->button3->BackColor = System::Drawing::Color::Transparent;
 			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -179,8 +174,7 @@ namespace WinProject {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
+			this->label1->BackColor = System::Drawing::Color::Transparent;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label1->ForeColor = System::Drawing::Color::White;
@@ -192,8 +186,7 @@ namespace WinProject {
 			// 
 			// btnClose
 			// 
-			this->btnClose->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(71)), static_cast<System::Int32>(static_cast<System::Byte>(129)),
-				static_cast<System::Int32>(static_cast<System::Byte>(177)));
+			this->btnClose->BackColor = System::Drawing::Color::Transparent;
 			this->btnClose->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnClose.BackgroundImage")));
 			this->btnClose->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->btnClose->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -206,12 +199,56 @@ namespace WinProject {
 			this->btnClose->UseVisualStyleBackColor = false;
 			this->btnClose->Click += gcnew System::EventHandler(this, &Autorisation::BtnClose);
 			// 
+			// contextMenuStrip1
+			// 
+			this->contextMenuStrip1->Name = L"contextMenuStrip1";
+			this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
+			// 
+			// TextPassword
+			// 
+			this->TextPassword->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(222)), static_cast<System::Int32>(static_cast<System::Byte>(165)),
+				static_cast<System::Int32>(static_cast<System::Byte>(148)));
+			this->TextPassword->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::World,
+				static_cast<System::Byte>(204), true));
+			this->TextPassword->ForeColor = System::Drawing::Color::White;
+			this->TextPassword->Location = System::Drawing::Point(837, 238);
+			this->TextPassword->Multiline = true;
+			this->TextPassword->Name = L"TextPassword";
+			this->TextPassword->Size = System::Drawing::Size(243, 33);
+			this->TextPassword->TabIndex = 10;
+			this->TextPassword->Text = L"ВВЕДИТЕ ПАРОЛЬ";
+			this->TextPassword->Enter += gcnew System::EventHandler(this, &Autorisation::TextPassword_Enter);
+			this->TextPassword->Leave += gcnew System::EventHandler(this, &Autorisation::TextPassword_Leave);
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(121, 213);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(222, 278);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox1->TabIndex = 11;
+			this->pictureBox1->TabStop = false;
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(37, 21);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(394, 313);
+			this->pictureBox2->TabIndex = 12;
+			this->pictureBox2->TabStop = false;
+			// 
 			// Autorisation
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
+			this->BackColor = System::Drawing::SystemColors::ControlLight;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1191, 583);
 			this->ControlBox = false;
+			this->Controls->Add(this->pictureBox1);
+			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->TextPassword);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnClose);
@@ -219,6 +256,7 @@ namespace WinProject {
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->TextLogin);
+			this->DoubleBuffered = true;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
@@ -229,6 +267,8 @@ namespace WinProject {
 			this->Text = L"Autorisation";
 			this->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &Autorisation::Autorisation_MouseDown);
 			this->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Autorisation::Autorisation_MouseMove);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -271,7 +311,7 @@ private: System::Void btnNumberClick(System::Object^ sender, System::EventArgs^ 
 			 button->Text == "ЗАБЫЛИ ПАРОЛЬ")
 	{
 		std::cout << "Нажаты кнопки, которые не используются." << std::endl;
-		MessageBox::Show("Функционал в данной версии не реализован", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Обратитесь по почте: den.darknezz@gmail.com", "OK", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	} else MessageBox::Show("Неизвестная кнопка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 }
 private: System::Void BtnClose(System::Object^ sender, System::EventArgs^ e) 
