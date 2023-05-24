@@ -419,9 +419,9 @@ namespace WinProject {
 			this->dom123->BackColor = System::Drawing::Color::Transparent;
 			this->dom123->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"dom123.BackgroundImage")));
 			this->dom123->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->dom123->Location = System::Drawing::Point(764, 180);
+			this->dom123->Location = System::Drawing::Point(721, 180);
 			this->dom123->Name = L"dom123";
-			this->dom123->Size = System::Drawing::Size(189, 112);
+			this->dom123->Size = System::Drawing::Size(232, 132);
 			this->dom123->TabIndex = 22;
 			this->dom123->TabStop = false;
 			// 
@@ -443,9 +443,9 @@ namespace WinProject {
 			this->pictureBox2->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.BackgroundImage")));
 			this->pictureBox2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox2->Location = System::Drawing::Point(846, 278);
+			this->pictureBox2->Location = System::Drawing::Point(846, 290);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(14, 150);
+			this->pictureBox2->Size = System::Drawing::Size(14, 138);
 			this->pictureBox2->TabIndex = 24;
 			this->pictureBox2->TabStop = false;
 			// 
@@ -499,6 +499,7 @@ namespace WinProject {
 			this->btnErrors->Size = System::Drawing::Size(133, 71);
 			this->btnErrors->TabIndex = 28;
 			this->btnErrors->UseVisualStyleBackColor = false;
+			this->btnErrors->Click += gcnew System::EventHandler(this, &MyForm::btnErrors_Click);
 			// 
 			// pictureBox5
 			// 
@@ -595,7 +596,7 @@ namespace WinProject {
 			this->pictureBox12->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->pictureBox12->Location = System::Drawing::Point(642, 247);
 			this->pictureBox12->Name = L"pictureBox12";
-			this->pictureBox12->Size = System::Drawing::Size(168, 16);
+			this->pictureBox12->Size = System::Drawing::Size(144, 20);
 			this->pictureBox12->TabIndex = 37;
 			this->pictureBox12->TabStop = false;
 			// 
@@ -1017,10 +1018,6 @@ private: System::Void btnTrands_Click(System::Object^ sender, System::EventArgs^
 }
 private: System::Void backgroundWorker1_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) 
 {
-	if (ruch)
-	{
-		Parser::PNagr = String_to_string(textBox1->Text);
-	}
 	changeLabels();
 	if (addSql == nullptr || addSql->IsDisposed)
 	{
@@ -1114,6 +1111,9 @@ private: System::Void backgroundWorker3_DoWork(System::Object^ sender, System::C
 	Parser::post_data_to_site(Parser::files::postPS, data);
 }
 private: System::Void backgroundWorker3_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
+}
+private: System::Void btnErrors_Click(System::Object^ sender, System::EventArgs^ e) {
+	MessageBox::Show("Ошибки не найдены", "ОК", MessageBoxButtons::OK, MessageBoxIcon::Information);
 }
 };
 }

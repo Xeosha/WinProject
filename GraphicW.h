@@ -108,19 +108,19 @@ namespace WinProject {
 				static_cast<System::Byte>(204)));
 			series1->LabelForeColor = System::Drawing::Color::Transparent;
 			series1->Legend = L"Legend1";
-			series1->Name = L"Series1";
+			series1->Name = L"T на улице";
 			series2->BorderWidth = 3;
 			series2->ChartArea = L"ChartArea1";
 			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
 			series2->Color = System::Drawing::Color::Lime;
 			series2->Legend = L"Legend1";
-			series2->Name = L"Series2";
+			series2->Name = L"Т в доме";
 			series3->BorderWidth = 3;
 			series3->ChartArea = L"ChartArea1";
 			series3->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
 			series3->Color = System::Drawing::Color::Yellow;
 			series3->Legend = L"Legend1";
-			series3->Name = L"Series3";
+			series3->Name = L"Т запрашиваемая";
 			series3->ShadowColor = System::Drawing::Color::Yellow;
 			series4->BorderWidth = 10;
 			series4->ChartArea = L"ChartArea1";
@@ -128,7 +128,7 @@ namespace WinProject {
 			series4->Color = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			series4->Legend = L"Legend1";
-			series4->Name = L"Series4";
+			series4->Name = L"P мощность";
 			this->chart->Series->Add(series1);
 			this->chart->Series->Add(series2);
 			this->chart->Series->Add(series3);

@@ -2,8 +2,8 @@
 void MySqlCon::connection_to_database()
 {
 	driver = get_driver_instance();
-	con = driver->connect("x958887o.beget.tech:3306", "x958887o_login", "bGYD7d2h");
-	con->setSchema("x958887o_login");
+	con = driver->connect("g95888pd.beget.tech:3306", "g95888pd_login", "GtP1bySF");
+	con->setSchema("g95888pd_login");
 }
 
 bool MySqlCon::check_user_data(std::string login, std::string password)

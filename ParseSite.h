@@ -11,7 +11,7 @@ namespace Parser
 	using namespace nlohmann;	// дл€ json
 
 	std::string WEATHER_URL = "https:\//www.gismeteo.ru/weather-perm-4476/now/";	// откуда парсить темпу погоды
-	std::string SERVER_URL = "http:\//x958887o.beget.tech/";						// ссылка дл€ работы с ардуинкой
+	std::string SERVER_URL = "http:\//g95888pd.beget.tech/";						// ссылка дл€ работы с ардуинкой
 	std::string TEMPERATURE_PARSER = "0";											// обновл€юща€с€ переменна€ темпы в ѕерми
 	std::string TEMPERATURE_USER = "0";												// температура пользовател€
 	std::string TEMPERATURE_ROOM = "0";												// теппература в комнате
@@ -52,9 +52,9 @@ namespace Parser
 			curl_easy_cleanup(curl);
 			if (url == WEATHER_URL)
 			{
-				std::cout << "GET: " << "Parsing temperature = " << TEMPERATURE_PARSER << std::endl;
+				std::cout << url << " GET: " << "Parsing temperature = " << TEMPERATURE_PARSER << std::endl;
 			}
-			else std::cout << "GET: " << data << std::endl;
+			else std::cout << url <<" GET: " << data << std::endl;
 		}
 		return data;
 	};
@@ -87,7 +87,7 @@ namespace Parser
 				std::cerr << "Error: " << curl_easy_strerror(ret) << std::endl;
 				return 0;
 			}
-			std::cout << "POST: " << jsonstr << std::endl;
+			std::cout << SERVER_URL + file << " POST: " << jsonstr << std::endl;
 			curl_easy_cleanup(hnd);
 			curl_slist_free_all(slist1);
 			return 1;
